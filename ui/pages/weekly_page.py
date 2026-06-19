@@ -8,11 +8,11 @@ from PyQt6.QtWidgets import (
     QTabWidget,
 )
 from PyQt6.QtCore import Qt
-from .frame import Page_Header
+from .header import Page_Header
 from ui.widgets.card import TaskCard
 
 days = ["SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"]
-tasks = ["Reading", "Sleep", "Exercise", "Art", "Streching", "Exploring", "Study"]
+tasks = ["Reading\nbooks", "Sleep", "Exercise\n30 min", "Art", "Streching", "Exploring", "Study"]
 
 
 class TaskColumn(QFrame):
@@ -20,7 +20,8 @@ class TaskColumn(QFrame):
         super().__init__()
 
         self.setFrameShape(QFrame.Shape.Box)
-        self.setStyleSheet("border: none;")
+        self.setStyleSheet("border: none;" \
+        "background: #1a1a1a;")
 
         layout = QVBoxLayout(self)
 
@@ -32,7 +33,7 @@ class TaskColumn(QFrame):
             font-size: 14px;
             font-weight: bold;
             padding: 6px;
-            border-bottom: 1px solid #eb9191;
+            border-bottom: 1px solid #f77e0d;
             """
         )
 
@@ -42,17 +43,16 @@ class TaskColumn(QFrame):
         for task in tasks:
             layout.addWidget(task)
 
-
         add_btn = QPushButton("+ New")
         add_btn.setStyleSheet(
             """
             QPushButton{background-color: transparent;
-            border: 1px solid #181818;
+            border: 1px solid #282723;
             font-size:18px;
             color: gray;
             border-radius: 6px;}
 
-            QPushButton::hover{background-color: #181818;}
+            QPushButton::hover{background-color: #111111;}
             """
                )
         layout.addWidget(add_btn)
@@ -78,12 +78,35 @@ class DayPage(QWidget):
 class Weekly_Tab(QWidget):
     def __init__(self):
         super().__init__()
+        self.setStyleSheet("background: #111111;")
 
         title = Page_Header("Weekly Schedule","Build Habits, Build Tommorow")
-        main_layout = QVBoxLayout(self)                                   
+        main_layout = QVBoxLayout(self)                                
+        main_layout.setSpacing(0)
         main_layout.addWidget(title)
 
         tabs = QTabWidget()
+        tabs.setDocumentMode(True)
+        tabs.setStyleSheet(
+            """
+            QTabWidget{
+            background: #1a1a1a;
+            }
+            QTabBar{
+                background: #111111;
+                border: none;
+            }
+            QTabBar::tab {
+                font-size: 12px;
+                padding: 6px 18px;
+                background: transparent;
+            }
+            QTabBar::tab:selected {
+                color: white;
+                border-bottom: 2px solid #f77e0d;
+            }
+            """
+        )
 
         for day in days:
             tabs.addTab(DayPage(), day)

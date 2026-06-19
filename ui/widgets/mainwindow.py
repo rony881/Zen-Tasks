@@ -15,7 +15,7 @@ class Mainwindow(QMainWindow):
         self.splitter = QSplitter()
         self.splitter.setStyleSheet(
             """
-            background-color: #0a0a0a;
+            border-radius: 1px solid #282723;
             """)       
         self.setCentralWidget(self.splitter)
 

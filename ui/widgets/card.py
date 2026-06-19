@@ -6,7 +6,7 @@ class TaskCard(QFrame):
     def __init__(self, task_name):
         super().__init__()
 
-        self.setStyleSheet("background-color: #181818;border-radius:6px;")
+        self.setStyleSheet("background-color: #121212;border-radius:6px;")
 
         layout = QVBoxLayout()
         layout.setSpacing(0)
