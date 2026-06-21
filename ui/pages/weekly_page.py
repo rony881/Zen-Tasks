@@ -84,7 +84,7 @@ from .header import Page_Header
 days = ["SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"]
 
 
-class Weekly_Tab(QWidget):
+class WeeklyTab(QWidget):
     def __init__(self):
         super().__init__()
         self.setStyleSheet("background: #111111;")
