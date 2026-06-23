@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import (
-    QVBoxLayout, QWidget, QSizePolicy,QHBoxLayout
+    QVBoxLayout,QHBoxLayout
 )
-from qfluentwidgets import CardWidget,SubtitleLabel,PushButton,BodyLabel
+from qfluentwidgets import CardWidget,SubtitleLabel,BodyLabel
 
 
 class TaskCard(CardWidget):
@@ -15,15 +15,13 @@ class TaskCard(CardWidget):
 
         self.time_label = SubtitleLabel(time)
         self.task_label = BodyLabel(task)
-        self.complete_button = PushButton("Complete")
 
         main_layout.addWidget(self.time_label)
         main_layout.addWidget(self.task_label)
 
         main_layout.addStretch()
 
-        button_layout = QHBoxLayout()
-        button_layout.addStretch()
-        button_layout.addWidget(self.complete_button)
+        buttom_layout = QHBoxLayout()
+        buttom_layout.addStretch()
 
-        main_layout.addLayout(button_layout)
+        main_layout.addLayout(buttom_layout)

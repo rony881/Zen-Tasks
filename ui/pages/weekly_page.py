@@ -1,88 +1,38 @@
-from sched import scheduler
-
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout,QTabWidget
+    QWidget, QVBoxLayout,QAbstractItemView,QHeaderView
 )
 from PyQt6.QtCore import Qt
-from ui.widgets.card import TaskCard
-from qfluentwidgets import TitleLabel,SmoothScrollArea
+from qfluentwidgets import TableWidget
 
+class PlannerTable(TableWidget):
 
-WEEKLY_SCHEDULE = {
-    "Sat" : {
-        "Morning" : ["Reading", "Drawing", "Meditation"],
-        "AfterNoon" : ["Exercise", "Drawing", "Meditation"],
-        "Night" : ["Reading", "Leg Day", "Meditation"]
-    },
-    "Sun" : {
-        "Morning" : ["Reading", "Drawing", "Meditation"],
-        "AfterNoon" : ["Exercise", "Drawing", "Meditation"],
-        "Night" : ["Reading", "Leg Day", "Meditation"]
-    },
-    "Mon" : {
-        "Morning" : ["Reading", "Drawing", "Meditation"],
-        "AfterNoon" : ["Exercise", "Drawing", "Meditation"],
-        "Night" : ["Reading", "Leg Day", "Meditation"]
-    },
-    "Tue" : {
-        "Morning" : ["Reading", "Drawing", "Meditation"],
-        "AfterNoon" : ["Exercise", "Drawing", "Meditation"],
-        "Night" : ["Reading", "Leg Day", "Meditation"]
-    },
-    "Wed" : {
-        "Morning" : ["Reading", "Drawing", "Meditation"],
-        "AfterNoon" : ["Exercise", "Drawing", "Meditation"],
-        "Night" : ["Reading", "Leg Day", "Meditation"]
-    },
-    "Thu" : {
-        "Morning" : ["Reading", "Drawing", "Meditation"],
-        "AfterNoon" : ["Exercise", "Drawing", "Meditation"],
-        "Night" : ["Reading", "Leg Day", "Meditation"]
-    },
-    "Fri" : {
-        "Morning" : ["Reading", "Drawing", "Meditation"],
-        "AfterNoon" : ["Exercise", "Drawing", "Meditation"],
-        "Night" : ["Reading", "Leg Day", "Meditation"]
-    }
-} 
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
-class WeeklyTab(QWidget):
-    def __init__(self):
-        super().__init__()
+        self._setup_columns()
 
-        layout = QVBoxLayout(self)
+    def _setup_columns(self):
 
-        # ================
-        # Header / Title
-        # ================
-        title = TitleLabel("Weekly Schedule")
-        layout.addWidget(title)
+        self.setColumnCount(3)
+        self.setHorizontalHeaderLabels(["Time","Task","Shift"])
 
-        # ================
-        # Tabbar
-        #================
-        tabs = QTabWidget()
-        for day,schedule in WEEKLY_SCHEDULE.items():
-            tabs.addTab(DayWidget(schedule),day)
+        hdr = self.horizontalHeader()
+        hdr.setSectionResizeMode(0, QHeaderView.ResizeMode.Fixed)
+        hdr.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.Fixed)
 
-        layout.addWidget(tabs)
+        # Column Width
+        self.setColumnWidth(0, 110)
+        self.setColumnWidth(2, 150)
+        self.verticalHeader().setVisible(False)
+        self.verticalHeader().setDefaultSectionSize(46)
 
-class DayWidget(SmoothScrollArea):
-    def __init__(self, routine):
-        super().__init__()
-
-        self.setWidgetResizable(True)
-
-        mainLayout = QVBoxLayout(self)
-
-        # Content widget 
-        content = QWidget()
-        contentLayout = QVBoxLayout(content)
-        self.setWidget(content)
-
-        for time, tasks in routine.items():
-            for task in tasks:
-                card = TaskCard(task, time)
-                contentLayout.addWidget(card)
-
-        contentLayout.addStretch()
+        self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.setShowGrid(True)
+        self.setAlternatingRowColors(False)
+        self.setEditTriggers(
+            QAbstractItemView.EditTrigger.DoubleClicked
+            | QAbstractItemView.EditTrigger.SelectedClicked
+        )
+        self.viewport().setMouseTracking(True)
