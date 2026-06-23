@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (
     QSplitter
 )
 from qfluentwidgets import FluentWindow, FluentIcon as FI
-from ui.pages.weekly_page import PlannerTable
+from ui.pages.weekly_page import WeeklyPlanner
 
 class Mainwindow(FluentWindow):
     def __init__(self):
@@ -15,7 +15,7 @@ class Mainwindow(FluentWindow):
         self.resize(1200,900)
 
         # Weekly Page
-        self.weekly_page = PlannerTable()
+        self.weekly_page = WeeklyPlanner(self)
         self.weekly_page.setObjectName("WeeklyTab")
         # Setup
         self._setup_main_panel()
