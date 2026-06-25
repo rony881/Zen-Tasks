@@ -1,60 +1,22 @@
 from PyQt6.QtWidgets import (
-    QStackedWidget, QWidget, QVBoxLayout,QHBoxLayout,QHeaderView,QTableWidgetItem, QFrame, QAbstractItemView,QPushButton
+    QStackedWidget,
+    QWidget,
+    QVBoxLayout,
+    QHBoxLayout,
+    QHeaderView,
+    QTableWidgetItem,
+    QFrame,
+    QAbstractItemView,
+    QPushButton
 )
 from PyQt6.QtGui import QColor,QFont
 from PyQt6.QtCore import Qt
-from qfluentwidgets import TableWidget,TitleLabel,TabWidget
+
+from core.data_loader import load_schedule
+from ui.widgets.title_bar import TitleBar
+from qfluentwidgets import TableWidget
 
 DAYS = ["Sat","Sun","Mon", "Tue", "Wed", "Thu", "Fri"]
-
-DATA: dict[str, list[tuple]] = {
-    "Mon": [
-        ("9:00 AM",  "Morning Walk",           "Low"),
-        ("10:00 AM", "Team Standup",            "High"),
-        ("11:00 AM", "Code Review",             "Medium"),
-        ("12:30 PM", "Lunch Break",             "Low"),
-        ("2:00 PM",  "Feature Development",     "Critical"),
-        ("4:00 PM",  "Reply to Emails",         "Medium"),
-        ("5:30 PM",  "Gym Session",             "High"),
-        ],
-    "Tue": [
-        ("9:30 AM",  "Project Planning",        "High"),
-        ("11:00 AM", "Client Call",             "Critical"),
-        ("1:00 PM",  "Lunch",                   "Low"),
-        ("3:00 PM",  "UI Design Review",        "Medium"),
-        ("5:00 PM",  "Documentation",           "Low"),
-        ],
-    "Wed": [
-        ("9:00 AM",  "Sprint Planning",         "Critical"),
-        ("11:00 AM", "Backend Development",     "High"),
-        ("1:30 PM",  "Break",                   "Low"),
-        ("3:00 PM",  "Testing & QA",            "High"),
-        ("4:30 PM",  "Team Sync",               "Medium"),
-        ],
-    "Thu": [
-        ("9:00 AM",  "Weekly Review",           "Medium"),
-        ("11:00 AM", "Mentor Session",          "High"),
-        ("1:00 PM",  "Lunch Walk",              "Low"),
-        ("3:00 PM",  "Reading / Research",      "Low"),
-        ],
-    "Fri": [
-        ("10:00 AM", "Retrospective",           "Medium"),
-        ("12:00 PM", "Team Lunch",              "Low"),
-        ("3:00 PM",  "Demo Preparation",        "Critical"),
-        ("5:00 PM",  "Week Wrap-up",            "Medium"),
-        ],
-    "Sat": [
-        ("10:00 AM", "Personal Projects",       "Medium"),
-        ("1:00 PM",  "Grocery Shopping",        "Low"),
-        ("4:00 PM",  "Outdoor Activity",        "Low"),
-        ],
-    "Sun": [
-        ("9:00 AM",  "Meal Prep",               "Medium"),
-        ("11:00 AM", "Family Time",             "High"),
-        ("4:00 PM",  "Next-week Planning",      "High"),
-        ],
-}
-
 
 class WeeklyPlanner(QWidget):
 
@@ -64,23 +26,18 @@ class WeeklyPlanner(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
+
+        self._schedule = load_schedule()
+        self.title_bar = TitleBar(self)
         self.day_buttons = {}
         
-        layout.addWidget(self._make_title_bar())
+        layout.addWidget(self.title_bar)
         layout.addWidget(self._make_day_bar())
         layout.addWidget(self._weekly_table())
-        
-    def _make_title_bar(self):
-        title_bar = QFrame()
-        layout = QHBoxLayout(title_bar)
-        title = TitleLabel("📅 Weekly Schedule")
-        layout.addWidget(title)
-        layout.addStretch()
-        return title_bar
 
     def _weekly_table(self) -> QStackedWidget:
         self.week_tabs = QStackedWidget(self)
-        for days, entries in DATA.items():
+        for day, entries in self._schedule.items():
             table = PlannerTable(self.week_tabs)
             table.load_data(entries)
             self.week_tabs.addWidget(table)
@@ -117,7 +74,7 @@ class WeeklyPlanner(QWidget):
                 color         : #2383E2;
                 border        : 1px solid #B4D1F8;
                 border-radius : 6px;
-                font-weight   : 700;
+                font-weight   : 600;
                 font-size     : 12.5px;
                 font-family   : 'Segoe UI', sans-serif;
                 padding       : 0 14px;
@@ -206,9 +163,7 @@ class PlannerTable(TableWidget):
         self.setRowHeight(row,46)
         return row
 
-    def load_data(self, entries: list[tuple]) -> None:
+    def load_data(self, entries: list[list]) -> None:
         self.setRowCount(0)
         for time, task, priority in entries:
             self.add_task(time, task, priority)
-        
-        

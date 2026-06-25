@@ -1,0 +1,47 @@
+{
+  "Sat": [
+    ["10:00 AM", "Personal Projects", "Medium"],
+    ["1:00 PM", "Grocery Shopping", "Low"],
+    ["4:00 PM", "Outdoor Activity", "Low"]
+  ],
+  "Sun": [
+    ["9:00 AM", "Meal Prep", "Medium"],
+    ["11:00 AM", "Family Time", "High"],
+    ["4:00 PM", "Next-week Planning", "High"]
+  ],
+  "Mon": [
+    ["9:00 AM", "Morning Walk", "Low"],
+    ["10:00 AM", "Team Standup", "High"],
+    ["11:00 AM", "Code Review", "Medium"],
+    ["12:30 PM", "Lunch Break", "Low"],
+    ["2:00 PM", "Feature Development", "Critical"],
+    ["4:00 PM", "Reply to Emails", "Medium"],
+    ["5:30 PM", "Gym Session", "High"]
+  ],
+  "Tue": [
+    ["9:30 AM", "Project Planning", "High"],
+    ["11:00 AM", "Client Call", "Critical"],
+    ["1:00 PM", "Lunch", "Low"],
+    ["3:00 PM", "UI Design Review", "Medium"],
+    ["5:00 PM", "Documentation", "Low"]
+  ],
+  "Wed": [
+    ["9:00 AM", "Sprint Planning", "Critical"],
+    ["11:00 AM", "Backend Development", "High"],
+    ["1:30 PM", "Break", "Low"],
+    ["3:00 PM", "Testing & QA", "High"],
+    ["4:30 PM", "Team Sync", "Medium"]
+  ],
+  "Thu": [
+    ["9:00 AM", "Weekly Review", "Medium"],
+    ["11:00 AM", "Mentor Session", "High"],
+    ["1:00 PM", "Lunch Walk", "Low"],
+    ["3:00 PM", "Reading / Research", "Low"]
+  ],
+  "Fri": [
+    ["10:00 AM", "Retrospective", "Medium"],
+    ["12:00 PM", "Team Lunch", "Low"],
+    ["3:00 PM", "Demo Preparation", "Critical"],
+    ["5:00 PM", "Week Wrap-up", "Medium"]
+  ]
+}
