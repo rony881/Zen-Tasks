@@ -1,5 +1,5 @@
 from qfluentwidgets import FluentWindow, FluentIcon as FI
-from ui.pages.weekly_page import WeeklyPlanner
+from ui.pages.weekly_page import WeeklyPage
 
 class Mainwindow(FluentWindow):
     def __init__(self):
@@ -8,7 +8,7 @@ class Mainwindow(FluentWindow):
         self.resize(1200,900)
 
         # Weekly Page
-        self.weekly_page = WeeklyPlanner(self)
+        self.weekly_page = WeeklyPage(self)
         self.weekly_page.setObjectName("WeeklyTab")
         # Setup
         self._setup_main_panel()
