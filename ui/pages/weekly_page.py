@@ -25,7 +25,7 @@ class WeeklyPage(QWidget):
         layout.setSpacing(0)
 
         self._schedule = load_schedule()
-        self.title_bar = TitleBar(self)
+        self.title_bar = TitleBar(self,"📅 Weekly Schedule")
 
         layout.addWidget(self.title_bar)
         layout.addWidget(self._build_tab_widget())
@@ -33,7 +33,6 @@ class WeeklyPage(QWidget):
     def _build_tab_widget(self) -> QTabWidget:
         self.tab_widget = QTabWidget(self)
         self.tab_widget.setDocumentMode(True)
-
         self.tab_widget.setStyleSheet("""
             QTabWidget::pane {
                 border          : none;
@@ -77,10 +76,9 @@ class WeeklyPage(QWidget):
         return self.tab_widget
 
     def select_day(self, day: str) -> None:
-        """Programmatically switch to the given day tab."""
+        """ switch to the given day tab."""
         if day in DAYS:
             self.tab_widget.setCurrentIndex(DAYS.index(day))
-
 
 class PlannerTable(TableWidget):
 
@@ -99,8 +97,6 @@ class PlannerTable(TableWidget):
 
         self.setColumnWidth(0, 110)
         self.setColumnWidth(2, 150)
-        self.verticalHeader().setVisible(False)
-        self.verticalHeader().setDefaultSectionSize(46)
 
         self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
@@ -110,7 +106,7 @@ class PlannerTable(TableWidget):
             QAbstractItemView.EditTrigger.DoubleClicked
             | QAbstractItemView.EditTrigger.SelectedClicked
         )
-        self.viewport().setMouseTracking(True)
+        self.viewport().setMouseTracking(False)
 
     def add_task(self, time: str, task: str, shift: str) -> int:
         row = self.rowCount()
