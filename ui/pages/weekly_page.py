@@ -48,10 +48,9 @@ class WeeklyPage(QWidget):
 
     def show_add_task_dialog(self):
         reply = AddTaskDialog(self.parent())
-        print("Dialog Opened")
+        reply.show()
 
     def select_day(self, day: str) -> None:
-        """ switch to the given day tab."""
         if day in DAYS:
             self.tab_widget.setCurrentIndex(DAYS.index(day))
 
