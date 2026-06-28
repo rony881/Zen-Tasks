@@ -13,6 +13,7 @@ from qfluentwidgets import TableWidget
 from core.data_loader import load_schedule
 from ui.theme import ADD_BTN_STYLE, TAB_WIDG_STYLE
 from ui.widgets.title_bar import TitleBar
+from ui.widgets.add_task_dialog import AddTaskDialog
 
 DAYS = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
 TIME_COL = 0
@@ -44,6 +45,10 @@ class WeeklyPage(QWidget):
             self.tab_widget.addTab(table, day)
 
         return self.tab_widget
+
+    def show_add_task_dialog(self):
+        reply = AddTaskDialog(self.parent())
+        print("Dialog Opened")
 
     def select_day(self, day: str) -> None:
         """ switch to the given day tab."""

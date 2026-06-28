@@ -12,7 +12,6 @@ class AddTaskDialog(MessageBoxBase):
 
         self.titleEdit = LineEdit()
         self.titleEdit.setPlaceholderText("Task title")
-        self.resize(400,500)
 
         self.descriptionEdit = TextEdit()
 
@@ -29,3 +28,5 @@ class AddTaskDialog(MessageBoxBase):
 
         self.yesButton.setText("Add Task")
         self.cancelButton.setText("Cancel")
+
+        self.show()
