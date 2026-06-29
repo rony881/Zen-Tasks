@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import (QDialog,
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor
-from qfluentwidgets import TextEdit
+from qfluentwidgets import AMTimePicker
 
 class AddTaskDialog(QDialog):
     def __init__(self, parent=None):
@@ -69,7 +69,7 @@ class AddTaskDialog(QDialog):
         self.task_disc.setFixedHeight(110)
         self.task_disc.setStyleSheet("""
             QTextEdit {
-                border: 1px solid #777777;
+                border: none;
                 border-radius: 6px;
                 font-size: 17px;
                 color: #444444;
@@ -80,6 +80,9 @@ class AddTaskDialog(QDialog):
         footer.setSpacing(8)
         footer.setContentsMargins(0, 12, 0, 0)
 
+        time = AMTimePicker()
+        footer.addWidget(time)
+
         priority = QComboBox(self)
         priority.addItems(["Low","Medium","High"])
         priority.setObjectName("priority")
@@ -87,7 +90,9 @@ class AddTaskDialog(QDialog):
         QComboBox#priority {
             color: #6B6B69;
             background: transparent;
-            border: 1px solid #777777;
+            border: 1px solid #cccccc;
+            border-bottom: 1px solid #cdcdcd;
+            border-top: 1px solid #cccccc;
             border-radius: 6px;
             padding: 4px 10px;
             min-width: 100px;
