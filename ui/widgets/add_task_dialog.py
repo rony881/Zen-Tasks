@@ -8,13 +8,16 @@ from PyQt6.QtWidgets import (QDialog,
     QWidget,
     QLabel
 )
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import pyqtSignal,Qt
 from PyQt6.QtGui import QColor
 from qfluentwidgets import AMTimePicker
 
 class AddTaskDialog(QDialog):
-    def __init__(self, parent=None):
+    task_created = pyqtSignal(int, str, str, str)
+    
+    def __init__(self, parent=None,day_index=None):
         super().__init__(parent)
+        self.day_index = day_index
         self.setWindowTitle("Add Task")
         self.resize(600,300)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
@@ -22,6 +25,7 @@ class AddTaskDialog(QDialog):
         self.setWindowFlags(
             Qt.WindowType.FramelessWindowHint |
             Qt.WindowType.Dialog)
+
         
         self._setup_ui()
         self._add_shadow()
@@ -61,6 +65,7 @@ class AddTaskDialog(QDialog):
             }
             QPushButton:hover { background: #F0F0F0; color: #111111; }
         """)
+        
         header.addStretch()
         header.addWidget(close_btn)
 
@@ -80,13 +85,13 @@ class AddTaskDialog(QDialog):
         footer.setSpacing(8)
         footer.setContentsMargins(0, 12, 0, 0)
 
-        time = AMTimePicker()
-        footer.addWidget(time)
+        self.time = AMTimePicker()
+        footer.addWidget(self.time)
 
-        priority = QComboBox(self)
-        priority.addItems(["Low","Medium","High"])
-        priority.setObjectName("priority")
-        priority.setStyleSheet("""
+        self.priority = QComboBox(self)
+        self.priority.addItems(["Low","Medium","High"])
+        self.priority.setObjectName("priority")
+        self.priority.setStyleSheet("""
         QComboBox#priority {
             color: #6B6B69;
             background: transparent;
@@ -121,9 +126,9 @@ class AddTaskDialog(QDialog):
             color: #ffffff;
         }
         """)
-        priority.setCurrentIndex(-1)        # No item selected
-        priority.setPlaceholderText("Priority")
-        footer.addWidget(priority)
+        self.priority.setCurrentIndex(-1)
+        self.priority.setPlaceholderText("Priority")
+        footer.addWidget(self.priority)
         
         create_btn = QPushButton("Create Task")
         create_btn.setFixedHeight(40)
@@ -154,8 +159,16 @@ class AddTaskDialog(QDialog):
 
         
     def _on_create(self):
-        ...
-
+        task = self.task_disc.toPlainText().strip()
+        time = self.time.getTime().toString("hh:mm AP")
+        prio = self.priority.currentText()
+    
+        if not task or not prio:
+            return
+    
+        self.task_created.emit(self.day_index, time, task, prio)
+        self.accept()
+        
     def _add_shadow(self):
         shadow = QGraphicsDropShadowEffect(self)
         shadow.setBlurRadius(48)

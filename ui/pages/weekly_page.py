@@ -47,9 +47,15 @@ class WeeklyPage(QWidget):
         return self.tab_widget
 
     def show_add_task_dialog(self):
-        reply = AddTaskDialog(self.parent())
-        reply.show()
-
+        dialog = AddTaskDialog(self,self.tab_widget.currentIndex())
+        dialog.task_created.connect(self._on_task_created)
+        dialog.exec()
+    
+    def _on_task_created(self, day_index: str, time: str, task: str, priority: str):
+        planner_table: PlannerTable = self.tab_widget.widget(day_index)
+        planner_table.add_task(time, task, priority)
+        self.tab_widget.setCurrentIndex(day_index)
+        
     def select_day(self, day: str) -> None:
         if day in DAYS:
             self.tab_widget.setCurrentIndex(DAYS.index(day))
