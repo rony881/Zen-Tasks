@@ -4,7 +4,7 @@ from qfluentwidgets import TitleLabel
 from ui.theme import ADD_BTN_STYLE
 
 class TitleBar(QFrame):
-    def __init__(self, parent, h1: str):
+    def __init__(self, parent, h1: str, btn: bool= False):
         super().__init__(parent)
         self.parent = parent
         layout = QHBoxLayout(self)
@@ -13,8 +13,8 @@ class TitleBar(QFrame):
         layout.addWidget(title)
         layout.addStretch()
 
-        self.add_btn = QPushButton("+ Add Task")
-        self.add_btn.setStyleSheet(ADD_BTN_STYLE)
-        self.add_btn.clicked.connect(self.parent.show_add_task_dialog)
-        
-        layout.addWidget(self.add_btn)
+        if btn:
+            self.add_btn = QPushButton("+ Add Task")
+            self.add_btn.setStyleSheet(ADD_BTN_STYLE)
+            self.add_btn.clicked.connect(self.parent.show_add_task_dialog)
+            layout.addWidget(self.add_btn)

@@ -1,4 +1,3 @@
-from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import (
     QHeaderView,
@@ -12,8 +11,8 @@ from qfluentwidgets import TableWidget
 
 from core.data_loader import load_schedule, save_schedule
 from ui.theme import ADD_BTN_STYLE, TAB_WIDG_STYLE
-from ui.widgets.title_bar import TitleBar
 from ui.widgets.add_task_dialog import AddTaskDialog
+from ui.widgets.title_bar import TitleBar
 
 DAYS = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
 TIME_COL = 0
@@ -29,7 +28,7 @@ class WeeklyPage(QWidget):
         layout.setSpacing(0)
 
         self._schedule = load_schedule()
-        self.title_bar = TitleBar(self,"📅 Weekly Schedule")
+        self.title_bar = TitleBar(self,"📅 Weekly Schedule",btn=True)
 
         layout.addWidget(self.title_bar)
         layout.addWidget(self._build_tab_widget())
