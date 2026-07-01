@@ -1,27 +1,48 @@
 from PyQt6.QtWidgets import (
-    QVBoxLayout,QHBoxLayout
+    QVBoxLayout,
+    QHBoxLayout,
+    QLabel,
+    QFrame
 )
-from qfluentwidgets import CardWidget,SubtitleLabel,BodyLabel
+from qfluentwidgets import CardWidget, CheckBox, TransparentToolButton, FluentIcon as FI
 
 
 class TaskCard(CardWidget):
-    def __init__(self, task, time):
+    def __init__(self, time:str, task:str, prio:str):
         super().__init__()
+        self.setFixedHeight(56)
+        self.setStyleSheet(
+            """
+            CardWidget{
+                border: 1px solid #999999;
+                border-radius: 6px;
+            }
+            """
+        )
 
-        self.setFixedHeight(100)
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(12,8,12,8)
+        layout.setSpacing(12)
 
-        main_layout = QVBoxLayout(self)
-        main_layout.setContentsMargins(10, 10, 10, 10)
+        self.checkbox = CheckBox()
+        layout.addWidget(self.checkbox)
 
-        self.time_label = SubtitleLabel(time)
-        self.task_label = BodyLabel(task)
+        time_lbl = QLabel(time)
+        time_lbl.setStyleSheet("color: #333333")
+        layout.addWidget(time_lbl)
 
-        main_layout.addWidget(self.time_label)
-        main_layout.addWidget(self.task_label)
+        task_lbl = QLabel(task)
+        task_lbl.setStyleSheet("color: #333333")
+        layout.addWidget(task_lbl)
+        layout.addStretch()
+        
+        prio_lbl = QLabel(prio)
+        prio_lbl.setStyleSheet("border:1px solid #4dabf7;color: #4dabf7;border-radius: 6px;")
+        layout.addWidget(prio_lbl)
 
-        main_layout.addStretch()
-
-        buttom_layout = QHBoxLayout()
-        buttom_layout.addStretch()
-
-        main_layout.addLayout(buttom_layout)
+        edit_btn = TransparentToolButton(FI.EDIT)
+        layout.addWidget(edit_btn)
+        
+        delete_btn = TransparentToolButton(FI.DELETE)
+        layout.addWidget(delete_btn)
+        
