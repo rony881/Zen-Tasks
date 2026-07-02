@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QHBoxLayout, QScrollArea, QVBoxLayout, QWidget, QFrame
-from qfluentwidgets import PrimaryPushButton, TransparentPushButton, FluentIcon as FI
+from qfluentwidgets import PrimaryPushButton, ProgressRing, TransparentPushButton, FluentIcon as FI
 
-from ui.widgets.card import TaskCard
+from ui.widgets.card import SimpleCard, TaskCard
 from ui.widgets.title_bar import TitleBar
 TEST_LIST = [
     ["12:00 am","Walking 3 hours","Medium"],
@@ -25,6 +25,14 @@ class DailyPage(QWidget):
         # title shown on top of the page
         self.title = TitleBar(self,"My Task")
         self.page_layout.addWidget(self.title)
+
+        # ======= Header Area ========
+        self.progress_ring = ProgressRing()
+        self.progress_ring.setFixedSize(48, 48)
+        self.progress_ring.setTextVisible(True)
+        progress_card = SimpleCard()
+        progress_card.setWidget(self.progress_ring)
+        self.page_layout.addWidget(progress_card)
 
         # ======= Main Content ======
         # Scroll Area for the Tasks List

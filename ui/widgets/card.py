@@ -1,10 +1,9 @@
 from PyQt6.QtWidgets import (
-    QVBoxLayout,
     QHBoxLayout,
     QLabel,
-    QFrame
 )
 from qfluentwidgets import CardWidget, CheckBox, TransparentToolButton, FluentIcon as FI
+from qfluentwidgets.components.date_time.calendar_view import QVBoxLayout
 
 
 class TaskCard(CardWidget):
@@ -45,4 +44,13 @@ class TaskCard(CardWidget):
         
         delete_btn = TransparentToolButton(FI.DELETE)
         layout.addWidget(delete_btn)
+
+class SimpleCard(CardWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.card_layout = QVBoxLayout(self)
+        self.card_layout.setContentsMargins(20, 16, 20, 16)
+        self.card_layout.setSpacing(16)
         
+    def setWidget(self,widget):
+        self.card_layout.addWidget(widget)
