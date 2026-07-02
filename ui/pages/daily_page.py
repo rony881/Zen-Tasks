@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QHBoxLayout, QScrollArea, QVBoxLayout, QWidget, QFrame
-from qfluentwidgets import PrimaryPushButton, ProgressRing, TransparentPushButton, FluentIcon as FI
+from qfluentwidgets import InfoBar, InfoBarPosition, PrimaryPushButton, ProgressRing, TransparentPushButton, FluentIcon as FI
 
-from core.data_loader import get_todays_tasks, load_tasks
+from core.data_loader import load_todays_tasks, save_todays_tasks
 from ui.widgets.add_task_dialog import AddTaskDialog
 from ui.widgets.card import SimpleCard, TaskCard
 from ui.widgets.title_bar import TitleBar
@@ -13,8 +13,7 @@ class DailyPage(QWidget):
         # main Layout of this page
         self.page_layout = QVBoxLayout(self)
         self.page_layout.setContentsMargins(0,0,0,0)
-        get_todays_tasks("Mon")
-        self.tasks = load_tasks()
+        self.tasks = load_todays_tasks("Mon")
         
         self._build_ui()
 
@@ -60,10 +59,33 @@ class DailyPage(QWidget):
         self.page_layout.addLayout(footer)
 
         for tasks in self.tasks:
-            time = tasks["time"]
-            task = tasks["task"]
-            prio = tasks["priority"]
-            self.list_layout.addWidget(TaskCard(time,task,prio))
+            card = TaskCard(tasks)
+            card.checkbox_changed.connect(self.update_stats)
+            self.list_layout.addWidget(card)
+            
         self.list_layout.addStretch(1)
+
+    def _add_task(self, time,task_name, priority):
+        task = {
+            "time": time,
+            "task" : task_name,
+            "priority": priority,
+            "done": False,
+        }
+        self.tasks.append(task)
+        save_todays_tasks(self.tasks)
+        InfoBar.success(
+            title="Task added",
+            content=task,
+            duration=1800,
+            position=InfoBarPosition.TOP,
+            parent=self,
+        )
+    def update_stats(self, checked=None):
+        total = len(self.tasks)
+        completed = sum(1 for t in self.tasks if t["done"])
+        percent = int(completed / total * 100) if total else 0
+        
+        self.progress_ring.setValue(percent)
 
         

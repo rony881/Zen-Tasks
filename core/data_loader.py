@@ -17,7 +17,7 @@ def save_schedule(data: dict) -> None:
     with open(_DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-def get_todays_tasks(day:str):
+def load_todays_tasks(day:str) -> list[dict]:
     daily_task = []
     schedule = load_schedule()
 
@@ -30,15 +30,12 @@ def get_todays_tasks(day:str):
         })
         save_todays_tasks(daily_task)
 
-def save_todays_tasks(tasks: list[dict]) -> None:
-    with open(_TODAYS_TASK_FILE, "w", encoding="utf-8") as f:
-        json.dump(tasks, f, indent=4, ensure_ascii=False)
-
-def load_tasks() -> list[dict]:
-    if not _TODAYS_TASK_FILE.exists():
-        return []
     try:
         with open(_TODAYS_TASK_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     except (json.JSONDecodeError, OSError):
         return []
+
+def save_todays_tasks(tasks: list[dict]) -> None:
+    with open(_TODAYS_TASK_FILE, "w", encoding="utf-8") as f:
+        json.dump(tasks, f, indent=4, ensure_ascii=False)

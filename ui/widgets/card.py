@@ -1,3 +1,6 @@
+from asyncio import tasks
+
+from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import (
     QHBoxLayout,
     QLabel,
@@ -7,9 +10,11 @@ from qfluentwidgets.components.date_time.calendar_view import QVBoxLayout
 
 
 class TaskCard(CardWidget):
-    def __init__(self, time:str, task:str, prio:str):
+    checkbox_changed = pyqtSignal(bool)
+    def __init__(self, task: dict):
         super().__init__()
         self.setFixedHeight(56)
+        self.task = task
         self.setStyleSheet(
             """
             CardWidget{
@@ -24,19 +29,21 @@ class TaskCard(CardWidget):
         layout.setSpacing(12)
 
         self.checkbox = CheckBox()
+        self.checkbox.setChecked(task["done"])
+        self.checkbox.toggled.connect(self.on_checked)
         layout.addWidget(self.checkbox)
 
-        time_lbl = QLabel(time)
+        time_lbl = QLabel(task["time"])
         time_lbl.setStyleSheet("color: #333333")
         layout.addWidget(time_lbl)
 
-        task_lbl = QLabel(task)
-        task_lbl.setStyleSheet("color: #333333")
-        layout.addWidget(task_lbl)
+        self.task_lbl = QLabel(task["task"])
+        self.task_lbl.setStyleSheet("color: #333333")
+        layout.addWidget(self.task_lbl)
         layout.addStretch()
         
-        prio_lbl = QLabel(prio)
-        prio_lbl.setStyleSheet("border:1px solid #4dabf7;color: #4dabf7;border-radius: 6px;")
+        prio_lbl = QLabel(task["priority"])
+        prio_lbl.setStyleSheet("color: #4dabf7;")
         layout.addWidget(prio_lbl)
 
         edit_btn = TransparentToolButton(FI.EDIT)
@@ -45,6 +52,10 @@ class TaskCard(CardWidget):
         delete_btn = TransparentToolButton(FI.DELETE)
         layout.addWidget(delete_btn)
 
+    def on_checked(self, checked):
+        self.task["done"] = checked
+        self.checkbox_changed.emit(checked)
+        
 class SimpleCard(CardWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
