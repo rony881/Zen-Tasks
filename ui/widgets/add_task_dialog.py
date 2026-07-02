@@ -11,6 +11,10 @@ from PyQt6.QtWidgets import (QDialog,
 from PyQt6.QtCore import pyqtSignal,Qt
 from PyQt6.QtGui import QColor
 from qfluentwidgets import AMTimePicker
+from config import PRIORITIES,UI_CONFIG
+
+DIALOG_WIDTH = UI_CONFIG["dialog_width"]
+DIALOG_HEIGHT = UI_CONFIG["dialog_height"]
 
 class AddTaskDialog(QDialog):
     task_created = pyqtSignal(int, str, str, str)
@@ -19,7 +23,7 @@ class AddTaskDialog(QDialog):
         super().__init__(parent)
         self.day_index = day_index
         self.setWindowTitle("Add Task")
-        self.resize(600,300)
+        self.resize(DIALOG_WIDTH,DIALOG_HEIGHT)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         
         self.setWindowFlags(
@@ -89,7 +93,7 @@ class AddTaskDialog(QDialog):
         footer.addWidget(self.time)
 
         self.priority = QComboBox(self)
-        self.priority.addItems(["Low","Medium","High"])
+        self.priority.addItems(PRIORITIES)
         self.priority.setObjectName("priority")
         self.priority.setStyleSheet("""
         QComboBox#priority {

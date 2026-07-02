@@ -8,12 +8,14 @@ from PyQt6.QtWidgets import (
 from qfluentwidgets import CardWidget, CheckBox, TransparentToolButton, FluentIcon as FI
 from qfluentwidgets.components.date_time.calendar_view import QVBoxLayout
 
+from config import UI_CONFIG
+HEIGHT = UI_CONFIG["card_height"]
 
 class TaskCard(CardWidget):
     checkbox_changed = pyqtSignal(bool)
     def __init__(self, task: dict):
         super().__init__()
-        self.setFixedHeight(56)
+        self.setFixedHeight(HEIGHT)
         self.task = task
         self.setStyleSheet(
             """

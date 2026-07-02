@@ -13,11 +13,8 @@ from core.data_loader import load_schedule, save_schedule
 from ui.theme import ADD_BTN_STYLE, TAB_WIDG_STYLE
 from ui.widgets.add_task_dialog import AddTaskDialog
 from ui.widgets.title_bar import TitleBar
+from config import DAYS, TIME_COL, TASK_COL, PRIORITY_COL
 
-DAYS = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
-TIME_COL = 0
-TASK_COL = 1
-PRIORITY_COL = 2
 
 class WeeklyPage(QWidget):
 
