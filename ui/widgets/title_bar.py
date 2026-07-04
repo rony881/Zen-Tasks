@@ -4,7 +4,9 @@ from qfluentwidgets import TitleLabel
 from ui.theme import ADD_BTN_STYLE
 
 class TitleBar(QFrame):
+    """Title bar widget with optional add task button."""
     def __init__(self, parent, h1: str, btn: bool= False):
+        """Initialize title bar with title and optional button."""
         super().__init__(parent)
         self.parent = parent
         layout = QHBoxLayout(self)

@@ -7,16 +7,19 @@ from PyQt6.QtWidgets import (
 )
 from qfluentwidgets import CardWidget, CheckBox, TransparentToolButton, FluentIcon as FI
 from qfluentwidgets.components.date_time.calendar_view import QVBoxLayout
+from core.utils.logger import logger
 
 from config import UI_CONFIG
 HEIGHT = UI_CONFIG["card_height"]
 
 class TaskCard(CardWidget):
+    """Card widget displaying a single task with checkbox, edit, and delete buttons."""
     checkbox_changed = pyqtSignal(bool)
     edit_clicked = pyqtSignal(dict)
     delete_clicked = pyqtSignal(dict)
     
     def __init__(self, task: dict):
+        """Initialize task card with task data."""
         super().__init__()
         self.setFixedHeight(HEIGHT)
         self.task = task
@@ -60,15 +63,20 @@ class TaskCard(CardWidget):
         layout.addWidget(delete_btn)
 
     def on_checked(self, checked):
+        """Handle checkbox state change."""
         self.task["done"] = checked
         self.checkbox_changed.emit(checked)
         
 class SimpleCard(CardWidget):
+    """Simple card widget for containing other widgets."""
+    
     def __init__(self, parent=None):
+        """Initialize simple card with vertical layout."""
         super().__init__(parent)
         self.card_layout = QVBoxLayout(self)
         self.card_layout.setContentsMargins(20, 16, 20, 16)
         self.card_layout.setSpacing(16)
         
     def setWidget(self,widget):
+        """Set the widget to be contained in this card."""
         self.card_layout.addWidget(widget)
