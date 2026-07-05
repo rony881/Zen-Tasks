@@ -1,6 +1,6 @@
 [
     {
-        "time": "9:00 AM",
+        "time": "09:00 AM",
         "task": "Meal Prep",
         "priority": "Medium",
         "done": false
@@ -12,8 +12,14 @@
         "done": false
     },
     {
-        "time": "4:00 PM",
+        "time": "04:00 PM",
         "task": "Next-week Planning",
+        "priority": "High",
+        "done": false
+    },
+    {
+        "time": "10:44 PM",
+        "task": "hello world",
         "priority": "High",
         "done": false
     }
