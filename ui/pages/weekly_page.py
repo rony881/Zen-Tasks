@@ -52,7 +52,7 @@ class WeeklyPage(QWidget):
         dialog.task_created.connect(self._on_task_created)
         dialog.exec()
     
-    def _on_task_created(self, day_index: str, time: str, task: str, priority: str):
+    def _on_task_created(self, day_index: int, time: str, task: str, priority: str):
         """Handle task creation from dialog."""
         planner_table: PlannerTable = self.tab_widget.widget(day_index)
         planner_table.add_task(time, task, priority)
@@ -76,7 +76,7 @@ class WeeklyPage(QWidget):
 class PlannerTable(QWidget):
     """Table widget for displaying and managing schedule entries."""
 
-    def __init__(self, parent=None):
+    def __init__(self, parent):
         """Initialize planner table with table widget."""
         
         super().__init__(parent)

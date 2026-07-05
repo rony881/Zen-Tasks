@@ -1,5 +1,3 @@
-from asyncio import tasks
-
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import (
     QHBoxLayout,
@@ -7,7 +5,8 @@ from PyQt6.QtWidgets import (
 )
 from qfluentwidgets import CardWidget, CheckBox, TransparentToolButton, FluentIcon as FI
 from qfluentwidgets.components.date_time.calendar_view import QVBoxLayout
-from core.utils.logger import logger
+from core.models.task import Task
+# from core.utils.logger import logger
 
 from config import UI_CONFIG
 HEIGHT = UI_CONFIG["card_height"]
@@ -15,10 +14,10 @@ HEIGHT = UI_CONFIG["card_height"]
 class TaskCard(CardWidget):
     """Card widget displaying a single task with checkbox, edit, and delete buttons."""
     checkbox_changed = pyqtSignal(bool)
-    edit_clicked = pyqtSignal(dict)
-    delete_clicked = pyqtSignal(dict)
+    edit_clicked = pyqtSignal(Task)
+    delete_clicked = pyqtSignal(Task)
     
-    def __init__(self, task: dict):
+    def __init__(self, task: Task):
         """Initialize task card with task data."""
         super().__init__()
         self.setFixedHeight(HEIGHT)
@@ -37,20 +36,20 @@ class TaskCard(CardWidget):
         layout.setSpacing(12)
 
         self.checkbox = CheckBox()
-        self.checkbox.setChecked(task["done"])
+        self.checkbox.setChecked(task.done)
         self.checkbox.toggled.connect(self.on_checked)
         layout.addWidget(self.checkbox)
 
-        time_lbl = QLabel(task["time"])
+        time_lbl = QLabel(task.time)
         time_lbl.setStyleSheet("color: #333333")
         layout.addWidget(time_lbl)
 
-        self.task_lbl = QLabel(task["task"])
+        self.task_lbl = QLabel(task.task)
         self.task_lbl.setStyleSheet("color: #333333")
         layout.addWidget(self.task_lbl)
         layout.addStretch()
         
-        prio_lbl = QLabel(task["priority"])
+        prio_lbl = QLabel(task.priority)
         prio_lbl.setStyleSheet("color: #4dabf7;")
         layout.addWidget(prio_lbl)
 
@@ -64,7 +63,7 @@ class TaskCard(CardWidget):
 
     def on_checked(self, checked):
         """Handle checkbox state change."""
-        self.task["done"] = checked
+        self.task.done = checked
         self.checkbox_changed.emit(checked)
         
 class SimpleCard(CardWidget):

@@ -8,7 +8,8 @@ from qfluentwidgets import (InfoBar,
 )
 from config import INFO_BAR_DURATION_SHORT, current_day
 from core.data_loader import load_todays_tasks, save_todays_tasks
-from ui.widgets.add_task_dialog import AddTaskDialog
+from core.models.task import Task
+# from ui.widgets.add_task_dialog import AddTaskDialog
 from ui.widgets.card import SimpleCard, TaskCard
 from ui.widgets.title_bar import TitleBar
 from core.utils.logger import logger
@@ -70,8 +71,8 @@ class DailyPage(QWidget):
         footer.addWidget(add_btn)
         self.page_layout.addLayout(footer)
 
-        for tasks in self.tasks:
-            card = TaskCard(tasks)
+        for task in self.tasks:
+            card = TaskCard(task)
             card.checkbox_changed.connect(self.update_stats)
             card.edit_clicked.connect(self._on_edit_task)
             card.delete_clicked.connect(self._on_delete_task)
@@ -82,25 +83,27 @@ class DailyPage(QWidget):
     def _add_task(self, time,task_name, priority):
         """Add a new task to the task list."""
         
-        task = {
-            "time": time,
-            "task" : task_name,
-            "priority": priority,
-            "done": False,
-        }
+        task = Task(
+            time = time,
+            task = task_name,
+            priority = priority,
+            done = False,
+        )
         self.tasks.append(task)
         save_todays_tasks(self.tasks)
+        
         InfoBar.success(
             title="Task added",
-            content=task,
+            content=task.task,
             duration=INFO_BAR_DURATION_SHORT,
             position=InfoBarPosition.TOP,
             parent=self,
         )
+        
     def update_stats(self, checked=None):
         """Update progress ring based on completed tasks."""
         total = len(self.tasks)
-        completed = sum(1 for t in self.tasks if t["done"])
+        completed = sum(1 for t in self.tasks if t.done)
         percent = int(completed / total * 100) if total else 0
         
         self.progress_ring.setValue(percent)
@@ -114,5 +117,3 @@ class DailyPage(QWidget):
 
     def _refresh_task_list(self):
         ...
-
-        
