@@ -40,7 +40,7 @@ QPushButton {
     color         : #FFF;
     border        : none;
     border-radius : 6px;
-    font-size     : 13px;
+    font-size     : 14px;
     font-weight   : 600;
     font-family   : 'Segoe UI', sans-serif;
     padding       : 7px 20px;

@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QFrame, QHBoxLayout, QPushButton
 
-from qfluentwidgets import TitleLabel
+from qfluentwidgets import FluentIcon as FI, PrimaryPushButton, TitleLabel
 from ui.theme import ADD_BTN_STYLE
 
 class TitleBar(QFrame):
@@ -13,10 +13,10 @@ class TitleBar(QFrame):
 
         title = TitleLabel(h1)
         layout.addWidget(title)
-        layout.addStretch()
+        layout.addStretch(1)
 
         if btn:
-            self.add_btn = QPushButton("+ Add Task")
+            self.add_btn = PrimaryPushButton(FI.ADD,"   New Task")
             self.add_btn.setStyleSheet(ADD_BTN_STYLE)
             self.add_btn.clicked.connect(self.parent.show_add_task_dialog)
             layout.addWidget(self.add_btn)

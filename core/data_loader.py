@@ -49,7 +49,7 @@ def load_todays_tasks(day: str) -> list[Task]:
             logger.warning(f"Day '{day}' not found in schedule")
             return []
         
-        if TODAYS_TASKS_FILE.exists():
+        if not TODAYS_TASKS_FILE.exists():
             daily_tasks = []
             for time, task, prio in schedule[day]:
                 daily_tasks.append(Task(

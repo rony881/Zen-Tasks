@@ -23,7 +23,6 @@ class EditTaskDialog(QDialog):
     """Dialog for editing an existing task's time, description, and priority."""
 
     task_updated = pyqtSignal(object, str, str, str)
-    task_deleted = pyqtSignal(object)
 
     def __init__(self, task: Task, parent=None):
         """Initialize edit task dialog, pre-filled with the given task's data."""
@@ -141,24 +140,6 @@ class EditTaskDialog(QDialog):
         """)
         footer.addWidget(self.priority)
 
-        delete_btn = QPushButton("Delete")
-        delete_btn.setFixedHeight(40)
-        delete_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        delete_btn.clicked.connect(self._on_delete)
-        delete_btn.setStyleSheet("""
-            QPushButton {
-                background: transparent;
-                color: #D64545;
-                border: 1px solid #D64545;
-                border-radius: 6px;
-                padding: 0 18px;
-                font-size: 14px;
-                font-weight: 600;
-            }
-            QPushButton:hover   { background: #FDECEC; }
-            QPushButton:pressed { background: #FBDADA; }
-        """)
-
         save_btn = QPushButton("Save Changes")
         save_btn.setFixedHeight(40)
         save_btn.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -177,7 +158,6 @@ class EditTaskDialog(QDialog):
             QPushButton:pressed { background: #1260B5; }
         """)
         footer.addStretch()
-        footer.addWidget(delete_btn)
         footer.addWidget(save_btn)
 
         card_layout.addLayout(header)
@@ -187,12 +167,12 @@ class EditTaskDialog(QDialog):
         outer.addWidget(self.card)
 
     def _populate_fields(self):
-        """Pre-fill the dialog fields with cirrent task's existing data."""
+        """Pre-fill the dialog fields with the task's existing data."""
         self.task_input.setPlainText(self.task.task)
 
         parsed_time = QTime.fromString(self.task.time, "hh:mm AP")
-        if parsed_time.isValid():
-            self.time.setTime(parsed_time)
+
+        self.time.setTime(parsed_time)
 
         index = self.priority.findText(self.task.priority)
         if index >= 0:
@@ -209,12 +189,6 @@ class EditTaskDialog(QDialog):
 
         logger.info(f"Saving edits for task: {self.task.task} -> {task_text}")
         self.task_updated.emit(self.task, time, task_text, prio)
-        self.accept()
-
-    def _on_delete(self):
-        """Handle delete button click - emits deletion for the original task."""
-        logger.info(f"Deleting task from edit dialog: {self.task.task}")
-        self.task_deleted.emit(self.task)
         self.accept()
 
     def _add_shadow(self):

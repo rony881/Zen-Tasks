@@ -20,8 +20,8 @@ class MainWindow(FluentWindow):
         self.navigationInterface.setExpandWidth(NAVI_WIDTH)
 
         # ============ Weekly Page ================
-        self.weekly_page = WeeklyPage(self)
-        self.weekly_page.setObjectName("weekly_page")
+        # self.weekly_page = WeeklyPage(self)
+        # self.weekly_page.setObjectName("weekly_page")
         # =========================================
 
         # ============ Daily Page ================
@@ -35,5 +35,5 @@ class MainWindow(FluentWindow):
     def _setup_main_panel(self):
         """Set up the navigation panel with sub-interfaces."""
         
-        self.addSubInterface(self.weekly_page,FI.DOCUMENT,"Weekly Page")
+        # self.addSubInterface(self.weekly_page,FI.DOCUMENT,"Weekly Page")
         self.addSubInterface(self.daily_page,FI.DOCUMENT,"Daily Page")
