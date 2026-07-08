@@ -94,39 +94,50 @@ class SleepJournal(QWidget):
         super().__init__(parent)
         logger.info("Sleep Journal Page Initialized Successfully")
 
-        self.table = TableWidget()
+        self.table = SleepHistory(self,SLEEP_LOGS)
 
         self._build_ui()
-        self._creat_table()
-
-        for log in SLEEP_LOGS:
-            self.add_sleep_log(log)
         
     def _build_ui(self):
         layout = QVBoxLayout(self)
         layout.addWidget(self.table)
+        
 
-    def _creat_table(self):
-        self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels([
+class SleepHistory(TableWidget):
+    def __init__(self, parent, sleep_logs):
+        super().__init__(parent)
+
+        self.setColumnCount(6)
+        self.setHorizontalHeaderLabels([
             "Date",
             "Bedtime",
             "Wake Up",
             "Duration",
-            "score",
-            "quality"
+            "Score",
+            "Quality"
         ])
-        header = self.table.horizontalHeader()
+
+        self.verticalHeader().hide()
+
+        header = self.horizontalHeader()
         header.setStretchLastSection(True)
         header.setSectionResizeMode(header.ResizeMode.Stretch)
 
-        self.table.setAlternatingRowColors(True)
-        self.table.setBorderVisible(False)
-        self.table.setWordWrap(False)
-        
-    def add_sleep_log(self,log: dict):
-        row = self.table.rowCount()
-        self.table.insertRow(row)
+        self.setAlternatingRowColors(True)
+        self.setBorderVisible(False)
+        self.setShowGrid(False)
+        self.setMouseTracking(False)
+        self.setWordWrap(False)
+        self.setBorderVisible(True)
+
+        # Adds all existing logs
+        for log in sleep_logs:
+            self.add_sleep_log(log)
+
+    
+    def add_sleep_log(self, log: dict):
+        row = self.rowCount()
+        self.insertRow(row)
 
         values = [
             log["date"],
@@ -138,7 +149,7 @@ class SleepJournal(QWidget):
         ]
 
         for column, value in enumerate(values):
-            self.table.setItem(
+            self.setItem(
                 row,
                 column,
                 QTableWidgetItem(str(value))
