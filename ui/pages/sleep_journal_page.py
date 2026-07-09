@@ -1,8 +1,9 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QTableWidget, QVBoxLayout, QWidget,QHBoxLayout,QTableWidgetItem
-from qfluentwidgets import CardWidget, TableWidget
+from qfluentwidgets import CardWidget, FluentIcon, TableWidget
 from config import PRIMARAY_FONT, SECONDARY_FONT, UI_CONFIG
 from core.utils.logger import logger
+from ui.widgets.stats_card import StatsCard
 
 HEIGHT = 67
 SLEEP_LOGS = [
@@ -164,6 +165,39 @@ class TopVisualArea(CardWidget):
         logger.info("Sleep Journal Page Initialized Successfully")
         self.setFixedHeight(180)
         layout = QHBoxLayout(self)
-        layout.setContentsMargins(12,8,12,8)
-        layout.setSpacing(12)
+        layout.setContentsMargins(2, 2, 2, 2)
+
+        self.setStyleSheet("""CardWidget{
+            background: transparent;border: none;
+            }""")
+
+        card0 = StatsCard(
+            self,
+            "Sales",
+            "275",
+            "+32% this week",
+        )
+        card1 = StatsCard(
+            self,
+            "Orders",
+            "1,245",
+            "+15% this week",
+        )
+        card2 = StatsCard(
+            self,
+            "Sats",
+            "125",
+            "+10% this week",
+        )
+        card3 = StatsCard(
+            self,
+            "Active Customer",
+            "375",
+            "+25% this week",
+        )
+        layout.addWidget(card0)
+        layout.addWidget(card1)
+        layout.addWidget(card2)
+        layout.addWidget(card3)
+        
         
