@@ -1,7 +1,6 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QLabel, QTableWidget, QVBoxLayout, QWidget,QHBoxLayout,QTableWidgetItem
+from PyQt6.QtWidgets import QGridLayout, QVBoxLayout, QWidget,QHBoxLayout,QTableWidgetItem
 from qfluentwidgets import CardWidget, FluentIcon, TableWidget
-from config import PRIMARAY_FONT, SECONDARY_FONT, UI_CONFIG
 from core.utils.logger import logger
 from ui.widgets.stats_card import StatsCard
 
@@ -164,40 +163,49 @@ class TopVisualArea(CardWidget):
         super().__init__(parent)
         logger.info("Sleep Journal Page Initialized Successfully")
         self.setFixedHeight(180)
-        layout = QHBoxLayout(self)
+        layout = QVBoxLayout(self)
         layout.setContentsMargins(2, 2, 2, 2)
-
         self.setStyleSheet("""CardWidget{
             background: transparent;border: none;
             }""")
 
+        # ---- Stat cards ----
+        statsGrid = QGridLayout()
+        statsGrid.setSpacing(12)
+
         card0 = StatsCard(
             self,
-            "Sales",
-            "275",
-            "+32% this week",
+            FluentIcon.QUIET_HOURS,
+            "Avg. sleep",
+            "7.2 hrs",
+            "goal 8.0 h",
         )
         card1 = StatsCard(
             self,
-            "Orders",
-            "1,245",
-            "+15% this week",
+            FluentIcon.CALENDAR,
+            "Consistency",
+            "87/100",
+            "Bed time & Wake regularity",
         )
         card2 = StatsCard(
             self,
-            "Sats",
-            "125",
-            "+10% this week",
+            FluentIcon.STOP_WATCH,
+            "Sleep debt",
+            "2",
+            "last 14 days",
         )
         card3 = StatsCard(
             self,
-            "Active Customer",
-            "375",
-            "+25% this week",
+            FluentIcon.CERTIFICATE,
+            "Current streak",
+            "6 Nights",
+            "Meeting your goal",
         )
-        layout.addWidget(card0)
-        layout.addWidget(card1)
-        layout.addWidget(card2)
-        layout.addWidget(card3)
+        statsGrid.addWidget(card0,0,0)
+        statsGrid.addWidget(card1,0,1)
+        statsGrid.addWidget(card2,0,2)
+        statsGrid.addWidget(card3,0,3)
+
+        layout.addLayout(statsGrid)
         
         
