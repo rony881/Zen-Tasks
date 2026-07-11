@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QGridLayout, QVBoxLayout, QWidget,QHBoxLayout,QTable
 from qfluentwidgets import CardWidget, FluentIcon, TableWidget
 from core.utils.logger import logger
 from ui.widgets.stats_card import StatsCard
+from ui.widgets.title_bar import TitleBar
 
 HEIGHT = 67
 SLEEP_LOGS = [
@@ -93,14 +94,16 @@ class SleepJournal(QWidget):
     def __init__(self, parent) -> None:
         super().__init__(parent)
         logger.info("Sleep Journal Page Initialized Successfully")
-        
+
+        self.title = TitleBar(self,"Sleep Journal")
         self.table = SleepHistory(self,SLEEP_LOGS)
 
         self._build_ui()
         
     def _build_ui(self):
         layout = QVBoxLayout(self)
-        
+
+        layout.addWidget(self.title)
         layout.addLayout(self.statistics())
         layout.addWidget(self.table)
         
