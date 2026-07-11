@@ -93,15 +93,52 @@ class SleepJournal(QWidget):
     def __init__(self, parent) -> None:
         super().__init__(parent)
         logger.info("Sleep Journal Page Initialized Successfully")
-
+        
         self.table = SleepHistory(self,SLEEP_LOGS)
-        self.top_widget = TopVisualArea()
 
         self._build_ui()
         
     def _build_ui(self):
         layout = QVBoxLayout(self)
-        layout.addWidget(self.top_widget)
+        # ---- Stat cards ----
+        statsGrid = QGridLayout()
+        statsGrid.setSpacing(12)
+
+        self.avg_sleep = StatsCard(
+            self,
+            FluentIcon.QUIET_HOURS,
+            "Avg. sleep",
+            "7.2 hrs",
+            "goal 8.0 h",
+        )
+        self.Consistency = StatsCard(
+            self,
+            FluentIcon.CALENDAR,
+            "Consistency",
+            "87/100",
+            "Bed time & Wake regularity",
+        )
+        self.sleep_dbt = StatsCard(
+            self,
+            FluentIcon.STOP_WATCH,
+            "Sleep debt",
+            "2",
+            "last 14 days",
+        )
+        self.streak = StatsCard(
+            self,
+            FluentIcon.CERTIFICATE,
+            "Current streak",
+            "6 Nights",
+            "Meeting your goal",
+        )
+        
+        statsGrid.addWidget(self.avg_sleep,0,0)
+        statsGrid.addWidget(self.Consistency ,0,1)
+        statsGrid.addWidget(self.sleep_dbt,0,2)
+        statsGrid.addWidget(self.streak,0,3)
+
+        layout.addLayout(statsGrid)
         layout.addWidget(self.table)
         
 
@@ -156,56 +193,3 @@ class SleepHistory(TableWidget):
                 column,
                 QTableWidgetItem(str(value))
             )
-
-class TopVisualArea(CardWidget):
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        logger.info("Sleep Journal Page Initialized Successfully")
-        self.setFixedHeight(180)
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(2, 2, 2, 2)
-        self.setStyleSheet("""CardWidget{
-            background: transparent;border: none;
-            }""")
-
-        # ---- Stat cards ----
-        statsGrid = QGridLayout()
-        statsGrid.setSpacing(12)
-
-        card0 = StatsCard(
-            self,
-            FluentIcon.QUIET_HOURS,
-            "Avg. sleep",
-            "7.2 hrs",
-            "goal 8.0 h",
-        )
-        card1 = StatsCard(
-            self,
-            FluentIcon.CALENDAR,
-            "Consistency",
-            "87/100",
-            "Bed time & Wake regularity",
-        )
-        card2 = StatsCard(
-            self,
-            FluentIcon.STOP_WATCH,
-            "Sleep debt",
-            "2",
-            "last 14 days",
-        )
-        card3 = StatsCard(
-            self,
-            FluentIcon.CERTIFICATE,
-            "Current streak",
-            "6 Nights",
-            "Meeting your goal",
-        )
-        statsGrid.addWidget(card0,0,0)
-        statsGrid.addWidget(card1,0,1)
-        statsGrid.addWidget(card2,0,2)
-        statsGrid.addWidget(card3,0,3)
-
-        layout.addLayout(statsGrid)
-        
-        
