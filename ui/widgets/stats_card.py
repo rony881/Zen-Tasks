@@ -5,26 +5,24 @@ from qfluentwidgets import CaptionLabel, CardWidget, IconWidget,StrongBodyLabel
 class StatsCard(CardWidget):
     def __init__(self, parent, icon, title: str, value, subtitle: str):
         super().__init__(parent)
-        # self.setFixedSize(270, 170)
         
         layout = QVBoxLayout(self)
+        self.setFixedHeight(112)
         layout.setContentsMargins(16, 14, 16, 12)
         layout.setSpacing(4)
         
         # ========= Top Area ========
         top = QHBoxLayout()
-        top.setSpacing(4)
+        top.setSpacing(6)
 
         # -------- Icon ---------
         icon_w = IconWidget(icon, self)
         icon_w.setFixedSize(15, 15)
         top.addWidget(icon_w)
-
+        
         # -------- Title --------
-        titleLabel = CaptionLabel(title, self)
-        top.addWidget(titleLabel)
+        top.addWidget(CaptionLabel(title, self))
         top.addStretch(1)
-
         layout.addLayout(top)
 
         # ------- Value Label ------
