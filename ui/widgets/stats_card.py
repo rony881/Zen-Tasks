@@ -3,7 +3,7 @@ from qfluentwidgets import CaptionLabel, CardWidget, IconWidget,StrongBodyLabel
 
 
 class StatsCard(CardWidget):
-    def __init__(self, parent, icon, title: str, value, subtitle: str):
+    def __init__(self, parent, icon, title: str):
         super().__init__(parent)
         
         layout = QVBoxLayout(self)
@@ -26,15 +26,19 @@ class StatsCard(CardWidget):
         layout.addLayout(top)
 
         # ------- Value Label ------
-        valueLabel = StrongBodyLabel(value,self)
-        valueLabel.setStyleSheet("""
+        self.valueLabel = StrongBodyLabel("_", self)
+        self.valueLabel.setStyleSheet("""
             font-size:25px;
             color:#3a3a3a;
             """)
-        layout.addWidget(valueLabel)
+        layout.addWidget(self.valueLabel)
         
-        subLabel = CaptionLabel(subtitle,self)
-        subLabel.setTextColor("#606060", "#c0c0c0")
-        layout.addWidget(subLabel)
+        self.subLabel = CaptionLabel("", self)
+        self.subLabel.setTextColor("#606060", "#c0c0c0")
+        layout.addWidget(self.subLabel)
         layout.addStretch(1)
+
+    def set_Value(self, value: str, sub: str):
+        self.valueLabel.setText(value)
+        self.subLabel.setText(sub)
                 
