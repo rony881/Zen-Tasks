@@ -5,6 +5,7 @@ This File Contains all constants and settings used throughout the Application
 
 from pathlib import Path
 from datetime import datetime
+from tkinter.constants import S
 
 # ======== Apllication Data ================
 DAYS = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
@@ -14,10 +15,11 @@ PRIORITIES = ["Low", "Medium", "High", "Critical"]
 BASE_DIR = Path(__file__).parent
 DATA_DIR = BASE_DIR / "data"
 
-# ============ File Names ============
+# ============ Data Files ============
 WEEKLY_SCHEDULE_FILE = DATA_DIR / "weekly_schedule.json"
 TODAYS_TASKS_FILE = DATA_DIR / "todays_tasks.json"
 LAST_LOADED_DAY_FILE = DATA_DIR / "last_loaded_day.txt"
+SLEEP_LOGS_FILE = DATA_DIR / "sleep_logs.json"
 
 # ============ UI Configuration ============
 UI_CONFIG = {
