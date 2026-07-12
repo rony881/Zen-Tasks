@@ -1,9 +1,8 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QGridLayout, QVBoxLayout, QWidget,QHBoxLayout,QTableWidgetItem
-from qfluentwidgets import CardWidget, FluentIcon, TableWidget
+from qfluentwidgets import CaptionLabel, CardWidget, FluentIcon, PrimaryPushButton, TableWidget, TitleLabel
 from core.utils.logger import logger
 from ui.widgets.stats_card import StatsCard
-from ui.widgets.title_bar import TitleBar
 
 HEIGHT = 67
 SLEEP_LOGS = [
@@ -95,17 +94,33 @@ class SleepJournal(QWidget):
         super().__init__(parent)
         logger.info("Sleep Journal Page Initialized Successfully")
 
-        self.title = TitleBar(self,"Sleep Journal")
         self.table = SleepHistory(self,SLEEP_LOGS)
 
         self._build_ui()
         
     def _build_ui(self):
         layout = QVBoxLayout(self)
-
-        layout.addWidget(self.title)
+        layout.setContentsMargins(24, 24, 24, 24)
+        layout.setSpacing(16)
+        
+        layout.addLayout(self.title_row())
+        layout.addWidget(CaptionLabel("Track tonight's sleep and see how you're trending."))
+        
         layout.addLayout(self.statistics())
         layout.addWidget(self.table)
+
+    def title_row(self):
+        title_row = QHBoxLayout()
+
+        title = TitleLabel("Sleep Journal")
+        title_row.addWidget(title)
+        title_row.addStretch(1)
+
+        self.add_btn = PrimaryPushButton(FluentIcon.EDIT, "Add Log")
+        self.add_btn.clicked.connect(self._on_add_log)
+        title_row.addWidget(self.add_btn)
+
+        return title_row
         
     def statistics(self):
         # ---- Stat cards ----
@@ -147,6 +162,9 @@ class SleepJournal(QWidget):
         statsGrid.addWidget(self.streak,0,3)
         
         return statsGrid
+
+    def _on_add_log(self):
+        ...
 
 class SleepHistory(TableWidget):
     def __init__(self, parent, sleep_logs):
