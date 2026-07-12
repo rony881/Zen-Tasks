@@ -6,13 +6,13 @@ from core.utils.logger import logger
 from ui.widgets.stats_card import StatsCard
 
 HEIGHT = 67
-SLEEP_LOGS = load_sleep_logs()
 
 class SleepJournal(QWidget):
     """Sleep Journal Page"""
     def __init__(self, parent) -> None:
         super().__init__(parent)
         logger.info("Sleep Journal Page Initialized Successfully")
+        SLEEP_LOGS = load_sleep_logs()
 
         self.table = SleepHistory(self,SLEEP_LOGS)
 
