@@ -24,7 +24,7 @@ class WeeklyPage(QWidget):
         super().__init__(parent)
         logger.info("Weekly Page Initialized Successfully")
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(24, 0, 24, 24)
+        layout.setContentsMargins(24, 1, 24, 24)
         layout.setSpacing(0)
 
         self._schedule = load_schedule()

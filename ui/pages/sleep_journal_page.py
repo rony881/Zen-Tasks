@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QGridLayout, QVBoxLayout, QWidget,QHBoxLayout,QTable
 from qfluentwidgets import CaptionLabel, CardWidget, FluentIcon, PrimaryPushButton, TableWidget, TitleLabel
 from core.data_loader import load_sleep_logs
 from core.utils.logger import logger
+from ui.theme import TABLE_STYLE
 from ui.widgets.stats_card import StatsCard
 from ui.widgets.title_bar import TitleBar
 
@@ -27,7 +28,7 @@ class SleepJournal(QWidget):
         
     def _build_ui(self):
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(24, 0, 24, 24)
+        layout.setContentsMargins(24, 1, 24, 24)
         layout.setSpacing(16)
 
         title = TitleBar(self,"Sleep Tacking", btn= "Add Log")
@@ -87,12 +88,13 @@ class SleepHistory(TableWidget):
             "Score",
             "Quality"
         ])
-
+        self.setStyleSheet(TABLE_STYLE)
         self.verticalHeader().hide()
 
         header = self.horizontalHeader()
         header.setStretchLastSection(True)
         header.setSectionResizeMode(header.ResizeMode.Stretch)
+        header.setDefaultAlignment(Qt.AlignmentFlag.AlignLeft)
 
         self.setAlternatingRowColors(True)
         self.setBorderVisible(False)

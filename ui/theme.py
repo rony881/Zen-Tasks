@@ -1,16 +1,52 @@
 """
 This File contains stylesheet themes for the Application
 """
+font = "Sans Serif"
 
-TITLE_STYLE = """
+h1_font_size = 27
+h1_font_weight = "semibold"
+h1_font_color = "#121212"
+
+h2_font_size = 23
+h2_font_weight =  "semibold"
+h2_font_color = "#151515"
+
+h3_font_size = 19
+h3_font_weight =  "semibold"
+h3_font_color = "#151515"
+
+body_font_size = 16
+body_font_color = "#222222"
+
+caption_font_size = 12
+
+# button_font_size = 16
+# button_font_weight =  "semibold"
+
+TITLE_STYLE = f"""
     color: #000111;
-    font-size: 30px;
-    font-weight: semibold;
+    font-size: {h1_font_size}px;
+    font-weight: {h1_font_weight};
 
 """
-BODY_STYLE = """
-    color: #111111;
-    font-size: 16px;
+
+BODY_STYLE = f"""
+    color: {body_font_color};
+    font-size: {body_font_size}px;
+"""
+
+TABLE_STYLE = """
+TableWidget {
+    background-color: transparent;
+    border: 1px solid #cdcdcd;
+}
+QHeaderView::section {
+    background: #fff;
+    color: #6B6B69;
+    font-weight: bold;
+    border: none;
+    padding: 8px;
+}
 """
 
 ADD_BTN_STYLE = """
@@ -40,7 +76,7 @@ QTabBar::tab {
     color           : #6B6B69;
     border          : 1px solid transparent;
     border-radius   : 6px;
-    font-size       : 12.5px;
+    font-size       : 12 px;
     font-family     : 'Segoe UI', sans-serif;
     padding         : 4px 14px;
     margin          : 8px 2px;
