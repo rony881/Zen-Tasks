@@ -33,7 +33,7 @@ class DailyPage(QWidget):
         """Build the UI components for the daily page."""
         # ======= Header =========
         # title shown on top of the page
-        self.title = TitleBar(self,"My Task",btn=True)
+        self.title = TitleBar(self,"My Task",btn="Add Task")
         self.page_layout.addWidget(self.title)
 
         # ======= Header Area ========
@@ -60,18 +60,6 @@ class DailyPage(QWidget):
 
         self.scroll_area.setWidget(self.list_container)
         self.page_layout.addWidget(self.scroll_area)
-
-        # ========== Footer =========
-        # clear complete and Add Task Button Area
-        footer = QHBoxLayout()
-        self.clr_task_btn = TransparentPushButton("Clear Completed")
-        self.clr_task_btn.clicked.connect(self._on_clear_completed)
-        footer.addWidget(self.clr_task_btn)
-        footer.addStretch(1)
-        add_btn = PrimaryPushButton(FI.ADD,"Add Task")
-        add_btn.clicked.connect(self.show_add_task_dialog)
-        footer.addWidget(add_btn)
-        self.page_layout.addLayout(footer)
 
         self._refresh_task_list()
 
@@ -104,7 +92,7 @@ class DailyPage(QWidget):
         
         self.progress_ring.setValue(percent)
 
-    def show_add_task_dialog(self):
+    def show_input_dialog(self):
         """Open the dialog for creating a new task."""
         dialog = AddTaskDialog(parent=self)
         dialog.task_created.connect(self._on_task_created)

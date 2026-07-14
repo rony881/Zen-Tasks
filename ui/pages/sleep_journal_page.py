@@ -4,6 +4,7 @@ from qfluentwidgets import CaptionLabel, CardWidget, FluentIcon, PrimaryPushButt
 from core.data_loader import load_sleep_logs
 from core.utils.logger import logger
 from ui.widgets.stats_card import StatsCard
+from ui.widgets.title_bar import TitleBar
 
 
 class SleepJournal(QWidget):
@@ -12,6 +13,13 @@ class SleepJournal(QWidget):
         super().__init__(parent)
         logger.info("Sleep Journal Page Initialized Successfully")
         SLEEP_LOGS = load_sleep_logs()
+        self.setStyleSheet(
+            """
+            CaptionLabel{
+            background: transparent;
+            }
+            """
+        )
 
         self.table = SleepHistory(self,SLEEP_LOGS)
 
@@ -21,25 +29,14 @@ class SleepJournal(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(24, 24, 24, 24)
         layout.setSpacing(16)
+
+        title = TitleBar(self,"Sleep Tacking", btn= "Add Log")
         
-        layout.addLayout(self.title_row())
+        layout.addWidget(title)
         layout.addWidget(CaptionLabel("Track tonight's sleep and see how you're trending."))
         
         layout.addLayout(self.statistics())
         layout.addWidget(self.table)
-
-    def title_row(self):
-        title_row = QHBoxLayout()
-
-        title = TitleLabel("Sleep Journal")
-        title_row.addWidget(title)
-        title_row.addStretch(1)
-
-        self.add_btn = PrimaryPushButton(FluentIcon.EDIT, "Add Log")
-        self.add_btn.clicked.connect(self._on_add_log)
-        title_row.addWidget(self.add_btn)
-
-        return title_row
         
     def statistics(self):
         # ---- Stat cards ----
@@ -74,7 +71,7 @@ class SleepJournal(QWidget):
         
         return statsGrid
 
-    def _on_add_log(self):
+    def show_input_dialog(self):
         ...
 
 class SleepHistory(TableWidget):

@@ -28,7 +28,7 @@ class WeeklyPage(QWidget):
         layout.setSpacing(0)
 
         self._schedule = load_schedule()
-        self.title_bar = TitleBar(self,"Weekly Schedule",btn=True)
+        self.title_bar = TitleBar(self,"Weekly Schedule",btn= "Add Task")
 
         layout.addWidget(self.title_bar)
         layout.addWidget(self._build_tab_widget())
@@ -46,7 +46,7 @@ class WeeklyPage(QWidget):
 
         return self.tab_widget
 
-    def show_add_task_dialog(self):
+    def show_input_dialog(self):
         """Show the add task dialog for the current tab."""
         dialog = AddTaskDialog(self,self.tab_widget.currentIndex())
         dialog.task_created.connect(self._on_task_created)
