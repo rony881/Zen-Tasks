@@ -1,9 +1,8 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QAbstractItemView, QGridLayout, QVBoxLayout, QWidget,QHBoxLayout,QTableWidgetItem
-from qfluentwidgets import CaptionLabel, CardWidget, FluentIcon, TableWidget
+from qfluentwidgets import BodyLabel, CaptionLabel, CardWidget, FluentIcon, StrongBodyLabel, TableWidget
 from core.data_loader import load_sleep_logs
 from core.utils.logger import logger
-from ui.theme import TABLE_STYLE
 from ui.widgets.stats_card import StatsCard
 from ui.widgets.title_bar import TitleBar
 
@@ -22,7 +21,7 @@ class SleepJournal(QWidget):
             """
         )
 
-        self.table = SleepHistory(self,SLEEP_LOGS)
+        self.History = SleepHistory(self,SLEEP_LOGS)
 
         self._build_ui()
         
@@ -37,7 +36,9 @@ class SleepJournal(QWidget):
         layout.addWidget(CaptionLabel("Track tonight's sleep and see how you're trending."))
         
         layout.addLayout(self.statistics())
-        layout.addWidget(self.table)
+        
+        layout.addWidget(StrongBodyLabel("Recent entries"))
+        layout.addWidget(self.History)
         
     def statistics(self):
         # ---- Stat cards ----
@@ -73,7 +74,10 @@ class SleepJournal(QWidget):
         return statsGrid
 
     def show_input_dialog(self):
-        ...
+        self.avg_sleep.set_Value(7,"Hours")
+        self.Consistency.set_Value(7,"Hours")
+        self.sleep_dbt.set_Value(7,"Hours")
+        self.streak.set_Value(7,"Hours")
 
 class SleepHistory(TableWidget):
     def __init__(self, parent, sleep_logs):
@@ -89,9 +93,8 @@ class SleepHistory(TableWidget):
             "Awakenings",
             "Mood"
         ])
-        self.setStyleSheet(TABLE_STYLE)
         self.verticalHeader().hide()
-        self.setBorderRadius(6)
+        self.setBorderRadius(8)
         self.setBorderVisible(True)
         self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
@@ -102,7 +105,6 @@ class SleepHistory(TableWidget):
         header = self.horizontalHeader()
         header.setStretchLastSection(True)
         header.setSectionResizeMode(header.ResizeMode.Stretch)
-
 
         # Adds all existing logs
         for log in sleep_logs:

@@ -27,21 +27,7 @@ TITLE_STYLE = f"""
     color: #000111;
     font-size: {h1_font_size}px;
     font-weight: {h1_font_weight};
-
-"""
-
-BODY_STYLE = f"""
-    color: {body_font_color};
-    font-size: {body_font_size}px;
-"""
-
-TABLE_STYLE = """
-TableWidget {
-    background-color: transparent;
-    font-size: 16px;
-    color: #222222;
-    border: 1px solid #cdcdcd;
-}
+    font-family: sans-serif;
 
 """
 
