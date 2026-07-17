@@ -1,6 +1,5 @@
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QAbstractItemView, QGridLayout, QVBoxLayout, QWidget,QHBoxLayout,QTableWidgetItem
-from qfluentwidgets import BodyLabel, CaptionLabel, CardWidget, FluentIcon, StrongBodyLabel, TableWidget
+from PyQt6.QtWidgets import QAbstractItemView, QGridLayout,QTableWidgetItem
+from qfluentwidgets import FluentIcon, TableWidget
 from core.data_loader import load_sleep_logs
 from core.utils.logger import logger
 from ui.widgets.page_base_widget import PageBaseWidget
@@ -29,7 +28,7 @@ class SleepJournal(PageBaseWidget):
             FluentIcon.QUIET_HOURS,
             "Avg. sleep"
         )
-        self.Consistency = StatsCard(
+        self.consistency = StatsCard(
             self,
             FluentIcon.CALENDAR,
             "Consistency",
@@ -46,7 +45,7 @@ class SleepJournal(PageBaseWidget):
         )
 
         statsGrid.addWidget(self.avg_sleep,0,0)
-        statsGrid.addWidget(self.Consistency ,0,1)
+        statsGrid.addWidget(self.consistency ,0,1)
         statsGrid.addWidget(self.sleep_dbt,0,2)
         statsGrid.addWidget(self.streak,0,3)
         
@@ -54,7 +53,7 @@ class SleepJournal(PageBaseWidget):
 
     def onAddButtonClicked(self):
         self.avg_sleep.set_Value(7,"Hours")
-        self.Consistency.set_Value(4,"Nights")
+        self.consistency.set_Value(4,"Nights")
         self.sleep_dbt.set_Value(2,"Hours")
         self.streak.set_Value(4,"Nights")
     

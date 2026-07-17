@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout, QWidget
-from qfluentwidgets import FluentIcon, PrimaryPushButton, TitleLabel
+from qfluentwidgets import FluentIcon, PrimaryPushButton, StrongBodyLabel, TitleLabel
 from ui.theme import ADD_BTN_STYLE, TITLE_STYLE
 
 
@@ -10,6 +10,7 @@ class PageBaseWidget(QWidget):
         super().__init__(parent)
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(24, 1, 24, 24)
+        self.main_layout.setSpacing(16)
 
     def setPageType(self,type):
         self.page_type = type
@@ -41,6 +42,21 @@ class PageBaseWidget(QWidget):
 
     def addStretch(self):
         self.main_layout.addStretch()
+
+    def addTitle(self, title: str, *buttons):
+        title_layout = QHBoxLayout()
+        title_layout.addWidget(self.buildTitle(title))
+        title_layout.addStretch(1)
+
+        if buttons:
+            for button in buttons:
+                title_layout.addWidget(button)
+
+        self.addLayout(title_layout)
+ 
+
+    def buildTitle(self, title: str) -> StrongBodyLabel:
+        return StrongBodyLabel(title)
 
     def onAddButtonClicked(self):
         """
