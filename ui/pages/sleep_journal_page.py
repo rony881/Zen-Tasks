@@ -3,42 +3,21 @@ from PyQt6.QtWidgets import QAbstractItemView, QGridLayout, QVBoxLayout, QWidget
 from qfluentwidgets import BodyLabel, CaptionLabel, CardWidget, FluentIcon, StrongBodyLabel, TableWidget
 from core.data_loader import load_sleep_logs
 from core.utils.logger import logger
+from ui.widgets.page_base_widget import PageBaseWidget
 from ui.widgets.stats_card import StatsCard
-from ui.widgets.title_bar import TitleBar
 
 
-class SleepJournal(QWidget):
-    """Sleep Journal Page"""
-    def __init__(self, parent) -> None:
+class SleepJournal(PageBaseWidget):
+    def __init__(self, parent):
         super().__init__(parent)
-        logger.info("Sleep Journal Page Initialized Successfully")
-        SLEEP_LOGS = load_sleep_logs()
-        self.setStyleSheet(
-            """
-            CaptionLabel{
-            background: transparent;
-            }
-            """
-        )
 
-        self.History = SleepHistory(self,SLEEP_LOGS)
+        self.build_ui()
 
-        self._build_ui()
-        
-    def _build_ui(self):
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(24, 1, 24, 24)
-        layout.setSpacing(16)
-
-        title = TitleBar(self,"Sleep Tacking", btn= "Add Log")
-        
-        layout.addWidget(title)
-        layout.addWidget(CaptionLabel("Track tonight's sleep and see how you're trending."))
-        
-        layout.addLayout(self.statistics())
-        
-        layout.addWidget(StrongBodyLabel("Recent entries"))
-        layout.addWidget(self.History)
+    def build_ui(self):
+        self.setPageHeader("Sleep Tracker", "Add Entry")
+        self.addLayout(self.statistics())
+        self.addTitle("Sleep History")
+        self.addWidget(SleepHistory(self))
         
     def statistics(self):
         # ---- Stat cards ----
@@ -73,15 +52,16 @@ class SleepJournal(QWidget):
         
         return statsGrid
 
-    def show_input_dialog(self):
+    def onAddButtonClicked(self):
         self.avg_sleep.set_Value(7,"Hours")
-        self.Consistency.set_Value(7,"Hours")
-        self.sleep_dbt.set_Value(7,"Hours")
-        self.streak.set_Value(7,"Hours")
-
+        self.Consistency.set_Value(4,"Nights")
+        self.sleep_dbt.set_Value(2,"Hours")
+        self.streak.set_Value(4,"Nights")
+    
 class SleepHistory(TableWidget):
-    def __init__(self, parent, sleep_logs):
+    def __init__(self, parent):
         super().__init__(parent)
+        self.sleep_logs = load_sleep_logs()
 
         self.setColumnCount(7)
         self.setHorizontalHeaderLabels([
@@ -107,7 +87,7 @@ class SleepHistory(TableWidget):
         header.setSectionResizeMode(header.ResizeMode.Stretch)
 
         # Adds all existing logs
-        for log in sleep_logs:
+        for log in self.sleep_logs:
             self.add_sleep_log(log)
 
         logger.info("Sleep History Loaded Successfully")
