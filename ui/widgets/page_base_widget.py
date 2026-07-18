@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import QFrame, QHBoxLayout, QScrollArea, QVBoxLayout, QWidget
 from qfluentwidgets import FluentIcon, PrimaryPushButton, StrongBodyLabel, TitleLabel
 from ui.theme import ADD_BTN_STYLE, TITLE_STYLE
 
@@ -53,12 +53,36 @@ class PageBaseWidget(QWidget):
                 title_layout.addWidget(button)
 
         self.addLayout(title_layout)
- 
 
     def buildTitle(self, title: str) -> StrongBodyLabel:
+        """ Build a Title and return Title as a Label """
         return StrongBodyLabel(title)
 
-    def onAddButtonClicked(self):
+    def addListContainer(self):
+        list_container = self._buildContainerWidget()
+        self.list_layout = QVBoxLayout(list_container)
+        self.list_layout.setContentsMargins(6, 4, 6, 4)
+        self.list_layout.setSpacing(8)
+        scroll_area = self.buildScrollArea(list_container)
+
+        self.addWidget(scroll_area)
+        
+    def _buildContainerWidget(self) -> QWidget:
+        container = QWidget()
+        container.setStyleSheet("background: transparent;")
+        return container
+
+    def buildScrollArea(self, widget):
+        """"Build a QScrollArea, add Widget and return the ScrollArea"""
+        scroll_area = QScrollArea(self)
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setFrameShape(QFrame.Shape.NoFrame)
+        scroll_area.setStyleSheet("QScrollArea{background: transparent; border: none;}")
+        scroll_area.setWidget(widget)
+
+        return scroll_area
+
+    def onAddButtonClicked(self) -> None:
         """
         Override this method to decide what happen 
         if add button is clicked
