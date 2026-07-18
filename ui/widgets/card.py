@@ -75,6 +75,6 @@ class SimpleCard(CardWidget):
         self.card_layout.setContentsMargins(20, 16, 20, 16)
         self.card_layout.setSpacing(16)
         
-    def setWidget(self,widget):
+    def addWidget(self,widget):
         """Set the widget to be contained in this card."""
         self.card_layout.addWidget(widget)

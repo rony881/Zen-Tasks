@@ -83,10 +83,7 @@ class DailyPage(PageBaseWidget):
         self.progress.setValue(percent)
 
     def onAddButtonClicked(self):
-        """Open the dialog for creating a new task."""
-        self.show_input_dialog()
-
-    def show_input_dialog(self):
+        """One Add Button Clicked"""
         dialog = AddTaskDialog(parent=self)
         if dialog.exec():
             data = dialog.get_data()

@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QAbstractItemView, QGridLayout,QTableWidgetItem
-from qfluentwidgets import FluentIcon, TableWidget
+from qfluentwidgets import FluentIcon as FI, TableWidget
 from core.data_loader import load_sleep_logs
 from core.utils.logger import logger
 from ui.widgets.page_base_widget import PageBaseWidget
@@ -25,22 +25,22 @@ class SleepJournal(PageBaseWidget):
         
         self.avg_sleep = StatsCard(
             self,
-            FluentIcon.QUIET_HOURS,
+            FI.QUIET_HOURS,
             "Avg. sleep"
         )
         self.consistency = StatsCard(
             self,
-            FluentIcon.CALENDAR,
+            FI.CALENDAR,
             "Consistency",
         )
         self.sleep_dbt = StatsCard(
             self,
-            FluentIcon.STOP_WATCH,
+            FI.STOP_WATCH,
             "Sleep debt"
         )
         self.streak = StatsCard(
             self,
-            FluentIcon.CERTIFICATE,
+            FI.CERTIFICATE,
             "Current streak"
         )
 
