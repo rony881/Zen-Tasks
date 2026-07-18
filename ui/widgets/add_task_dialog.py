@@ -12,6 +12,7 @@ from PyQt6.QtCore import pyqtSignal,Qt
 from PyQt6.QtGui import QColor
 from qfluentwidgets import AMTimePicker
 from config import PRIORITIES,UI_CONFIG
+from core.models.task import Task
 from core.utils.logger import logger
 DIALOG_WIDTH = UI_CONFIG["dialog_width"]
 DIALOG_HEIGHT = UI_CONFIG["dialog_height"]
@@ -142,7 +143,7 @@ class AddTaskDialog(QDialog):
         create_btn.setFixedHeight(40)
         create_btn.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        create_btn.clicked.connect(self._on_create)
+        create_btn.clicked.connect(self._accept)
         create_btn.setStyleSheet("""
             QPushButton {
                 background: #1A73CE;
@@ -165,19 +166,6 @@ class AddTaskDialog(QDialog):
 
         outer.addWidget(self.card)
 
-        
-    def _on_create(self):
-        """Handle create task button click - validates and emits task data."""
-        task = self.task_input.toPlainText().strip()
-        time = self.time.getTime().toString("hh:mm AP")
-        prio = self.priority.currentText()
-    
-        if not task or not prio:
-            return
-    
-        self.task_created.emit(self.day_index, time, task, prio)
-        self.accept()
-        
     def _add_shadow(self):
         """Add drop shadow effect to the dialog card."""
         shadow = QGraphicsDropShadowEffect(self)
@@ -186,3 +174,24 @@ class AddTaskDialog(QDialog):
         shadow.setYOffset(10)
         shadow.setColor(QColor(0, 0, 0, 45))
         self.card.setGraphicsEffect(shadow)
+        
+    def get_data(self):
+        """Return The Task Data"""
+        task = self.task_input.toPlainText().strip()
+        time = self.time.getTime().toString("hh:mm AP")
+        prio = (self.priority.currentText())
+        
+        if not task or not prio:
+            return
+
+        return Task(
+            time = time,
+            task = task,
+            priority = prio,
+            done = False,
+        )
+        
+    def _accept(self):
+        """Handle Create Task button click"""
+        self.accept()
+        
