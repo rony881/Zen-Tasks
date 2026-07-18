@@ -10,8 +10,8 @@ from PyQt6.QtWidgets import (QDialog,
 )
 from PyQt6.QtCore import pyqtSignal,Qt
 from PyQt6.QtGui import QColor
-from qfluentwidgets import AMTimePicker
-from config import PRIORITIES,UI_CONFIG
+from qfluentwidgets import AMTimePicker, InfoBar, InfoBarPosition
+from config import INFO_BAR_DURATION_SHORT, PRIORITIES,UI_CONFIG
 from core.models.task import Task
 from core.utils.logger import logger
 DIALOG_WIDTH = UI_CONFIG["dialog_width"]
@@ -175,14 +175,20 @@ class AddTaskDialog(QDialog):
         shadow.setColor(QColor(0, 0, 0, 45))
         self.card.setGraphicsEffect(shadow)
         
-    def get_data(self):
+    def get_data(self) -> Task:
         """Return The Task Data"""
         task = self.task_input.toPlainText().strip()
         time = self.time.getTime().toString("hh:mm AP")
         prio = (self.priority.currentText())
         
         if not task or not prio:
-            return
+            InfoBar.error(
+                title="Task not added",
+                content="Task or Priority cannot be empty",
+                duration=INFO_BAR_DURATION_SHORT,
+                position=InfoBarPosition.TOP,
+                parent=self,
+            )
 
         return Task(
             time = time,
