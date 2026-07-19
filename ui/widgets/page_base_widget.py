@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QFrame, QHBoxLayout, QScrollArea, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import QFrame, QHBoxLayout, QScrollArea, QTabWidget, QVBoxLayout, QWidget
 from qfluentwidgets import FluentIcon, PrimaryPushButton, StrongBodyLabel, TableWidget, TitleLabel
-from ui.theme import ADD_BTN_STYLE, TITLE_STYLE
+from ui.theme import ADD_BTN_STYLE, TAB_WIDG_STYLE, TITLE_STYLE
 
 
 class PageBaseWidget(QWidget):
@@ -97,3 +97,10 @@ class PageBaseWidget(QWidget):
         table.setShowGrid(False)
 
         return table
+
+    def buildTabWidget(self) -> QTabWidget:
+        tab_widget = QTabWidget()
+        tab_widget.setDocumentMode(True)
+        tab_widget.setStyleSheet(TAB_WIDG_STYLE)
+
+        return tab_widget
