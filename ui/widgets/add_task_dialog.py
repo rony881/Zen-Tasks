@@ -13,7 +13,6 @@ from PyQt6.QtGui import QColor
 from qfluentwidgets import AMTimePicker, InfoBar, InfoBarPosition
 from config import INFO_BAR_DURATION_SHORT, PRIORITIES,UI_CONFIG
 from core.models.task import Task
-from core.utils.logger import logger
 from ui.theme import CLOSE_BTN_STYLE, CREATE_TASK_BTN_STYLE, DIALOG_CARD_STYLE, PRIORITY_STYLE, TASK_INPUT_STYLE
 DIALOG_WIDTH = UI_CONFIG["dialog_width"]
 DIALOG_HEIGHT = UI_CONFIG["dialog_height"]
@@ -23,13 +22,11 @@ class AddTaskDialog(QDialog):
     
     def __init__(
         self,
-        parent: QWidget | None = None,
-        day_index: int | None = None,
+        parent: QWidget | None = None
     ) -> None:
         
         """Initialize add task dialog."""
         super().__init__(parent)
-        self.day_index = day_index
         self.setWindowTitle("Add Task")
         self.resize(DIALOG_WIDTH,DIALOG_HEIGHT)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
@@ -38,7 +35,6 @@ class AddTaskDialog(QDialog):
             Qt.WindowType.FramelessWindowHint |
             Qt.WindowType.Dialog)
 
-        logger.info(f"Opening AddTaskDialog for day index {day_index}")
         self._setup_ui()
         self._add_shadow()
         

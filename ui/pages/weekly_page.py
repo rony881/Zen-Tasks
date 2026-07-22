@@ -41,7 +41,7 @@ class WeeklyPage(PageBaseWidget):
     def onAddButtonClicked(self) -> None:
         """Show the add task dialog for the current tab."""
         day_index = self.tab_widget.currentIndex()
-        dialog = AddTaskDialog(self, day_index)
+        dialog = AddTaskDialog(self)
         if dialog.exec():
             task = dialog.get_data()
             self._add_task(day_index, task)

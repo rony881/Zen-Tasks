@@ -84,7 +84,7 @@ class DailyPage(PageBaseWidget):
 
     def onAddButtonClicked(self):
         """One Add Button Clicked"""
-        dialog = AddTaskDialog(parent=self)
+        dialog = AddTaskDialog(self)
         if dialog.exec():
             data = dialog.get_data()
             self._add_task(data)
