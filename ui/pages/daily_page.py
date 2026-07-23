@@ -94,20 +94,14 @@ class DailyPage(PageBaseWidget):
         logger.info(f"Edit task button requested: {task.task}")
         dialog = EditTaskDialog(task, parent=self)
         if dialog.exec():
-            data = dialog.get_data()
-            print(data)
-            print(type(data))
-            print(len(data))
-            self._update_task(*data)
+            updated_task = dialog.get_data()
+            self._update_task(updated_task)
             
-    def _update_task(self, task: Task, time, task_text, priority):
+    def _update_task(self, task: Task):
         """Handle task_updated signal from EditTaskDialog."""
-        task.time = time
-        task.task = task_text
-        task.priority = priority
         save_todays_tasks(self.tasks)
         self._refresh_task_list()
-
+    
         InfoBar.success(
             title="Task updated",
             content=task.task,
