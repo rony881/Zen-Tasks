@@ -40,7 +40,7 @@ class EditTaskDialog(QDialog):
         logger.info(f"Opening EditTaskDialog for task: {task.task}")
         self._setup_ui()
         self._add_shadow()
-        self._populate_fields()
+        self._fill_up_dialog()
 
     def _setup_ui(self):
         """Set up the dialog UI components."""
@@ -90,7 +90,7 @@ class EditTaskDialog(QDialog):
         save_btn = QPushButton("Save Changes")
         save_btn.setFixedHeight(40)
         save_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        save_btn.clicked.connect(self._on_save)
+        save_btn.clicked.connect(self.accept())
         save_btn.setStyleSheet(CREATE_TASK_BTN_STYLE)
         footer.addStretch()
         footer.addWidget(save_btn)
@@ -110,7 +110,7 @@ class EditTaskDialog(QDialog):
         shadow.setColor(QColor(0, 0, 0, 45))
         self.card.setGraphicsEffect(shadow)
         
-    def _populate_fields(self):
+    def _fill_up_dialog(self):
         """Pre-fill the dialog fields with the task's existing data."""
         self.task_input.setPlainText(self.task.task)
 
@@ -121,23 +121,10 @@ class EditTaskDialog(QDialog):
         index = self.priority.findText(self.task.priority)
         if index >= 0:
             self.priority.setCurrentIndex(index)
-
-    def _on_save(self):
-        """Handle save button click - validates and emits updated task data."""
-        task_text = self.task_input.toPlainText().strip()
-        time = self.time.getTime().toString("hh:mm AP")
-        prio = self.priority.currentText()
-
-        if not task_text or not prio:
-            return
-
-        logger.info(f"Saving edits for task: {self.task.task} -> {task_text}")
-        self.task_updated.emit(self.task, time, task_text, prio)
-        self.accept()
         
     def get_data(self):
-        
         """Returns updated task data."""
+        
         task = self.task_input.toPlainText().strip()
         time = self.time.getTime().toString("hh:mm AP")
         prio = self.priority.currentText()
