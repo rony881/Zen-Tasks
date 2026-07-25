@@ -77,6 +77,10 @@ class DialogBaseWidget(QDialog):
     def addLayout(self, layout: QVBoxLayout | QHBoxLayout) -> None:
         """Add a Layout to Dialog."""
         self.container_layout.addLayout(layout)
+
+    def addWidget(self, widget: QWidget) -> None:
+        """Add a widget directly to the dialog body."""
+        self.container_layout.addWidget(widget)
     
     def makeButton(
         self,
