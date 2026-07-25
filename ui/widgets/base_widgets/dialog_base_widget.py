@@ -1,5 +1,6 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QDialog, QHBoxLayout, QLabel, QPushButton, QTextEdit, QVBoxLayout, QWidget
+from PyQt6.QtGui import QColor
+from PyQt6.QtWidgets import QComboBox, QDialog, QGraphicsDropShadowEffect, QHBoxLayout, QLabel, QPushButton, QTextEdit, QVBoxLayout, QWidget
 
 from ui.theme import CLOSE_BTN_STYLE, DIALOG_CARD_STYLE
 
@@ -8,8 +9,8 @@ class DialogBaseWidget(QDialog):
     """Base Widget For Making Dialogs for the Application."""
 
     def __init__(self, parent: QWidget | None):
-        super().__init__(parent)
         """Initialize the Dialog."""
+        super().__init__(parent)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setWindowFlags(
             Qt.WindowType.FramelessWindowHint |
@@ -28,17 +29,34 @@ class DialogBaseWidget(QDialog):
         self.title = QLabel()
         self.title.setStyleSheet("color:#666666;font-size:17px;")
         self.header.addWidget(self.title)
+        self.header.addStretch()
 
         self.close_btn = self.makeButton("✕", 28, 28, CLOSE_BTN_STYLE)
+        self.close_btn.clicked.connect(self.reject)
         self.header.addWidget(self.close_btn)
+
+        self.outer.addWidget(self.container)
+
+        self._setup_ui()
+        self._add_shadow()
         
         
     def _setup_ui(self):
+        """Override in subclasses to build the body + footer."""
         ...
 
+    def _add_shadow(self):
+        """Add drop shadow effect to the Dialog."""
+        shadow = QGraphicsDropShadowEffect(self)
+        shadow.setBlurRadius(48)
+        shadow.setXOffset(0)
+        shadow.setYOffset(10)
+        shadow.setColor(QColor(0, 0, 0, 45))
+        self.container.setGraphicsEffect(shadow)
+    
     def setDialogTitle(self, title: str):
         """Set Dialog Window Title"""
-        self.setWindowTitle(title)
+        self.title.setText(title)
 
     def setDialogSize(self, width: int= 600, height: int= 300):
         """Set Dialog Window size"""
@@ -79,4 +97,21 @@ class DialogBaseWidget(QDialog):
         text_area.setPlaceholderText(placeholderText)
         text_area.setFixedHeight(height)
         text_area.setStyleSheet(stylesheet)
+        return text_area
+
+    def makeComboBox(self, items: list[str], object_name: str, stylesheet, placeholder: str | None = None) -> QComboBox:
+        combo = QComboBox(self)
+        combo.addItems(items)
+        combo.setObjectName(object_name)
+        combo.setStyleSheet(stylesheet)
+        if placeholder:
+            combo.setCurrentIndex(-1)
+            combo.setPlaceholderText(placeholder)
+        return combo
+
+    def makeFooter(self) -> QHBoxLayout:
+        footer = QHBoxLayout()
+        footer.setSpacing(8)
+        footer.setContentsMargins(0, 12, 0, 0)
+        return footer
         
