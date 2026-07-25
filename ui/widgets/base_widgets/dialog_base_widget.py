@@ -31,7 +31,7 @@ class DialogBaseWidget(QDialog):
         self.header.addWidget(self.title)
         self.header.addStretch()
 
-        self.close_btn = self.makeButton("✕", 28, 28, CLOSE_BTN_STYLE)
+        self.close_btn = self.makeIconButton("✕", 28, CLOSE_BTN_STYLE)
         self.close_btn.clicked.connect(self.reject)
         self.header.addWidget(self.close_btn)
 
@@ -82,18 +82,20 @@ class DialogBaseWidget(QDialog):
         """Add a widget directly to the dialog body."""
         self.container_layout.addWidget(widget)
     
-    def makeButton(
-        self,
-        text: str,
-        w: int,
-        h: int,
-        stylesheet
-    ) -> QPushButton:
+    def makeIconButton(self, text: str, size: int, stylesheet) -> QPushButton:
+        """Square icon-style button, e.g. the close (✕) button."""
         button = QPushButton(text)
-        button.setFixedSize(w,h)
+        button.setFixedSize(size, size)
         button.setCursor(Qt.CursorShape.PointingHandCursor)
         button.setStyleSheet(stylesheet)
-
+        return button
+    
+    def makeActionButton(self, text: str, height: int, stylesheet) -> QPushButton:
+        """Text action button, e.g. 'Create Task' / 'Save Changes'."""
+        button = QPushButton(text)
+        button.setFixedHeight(height)
+        button.setCursor(Qt.CursorShape.PointingHandCursor)
+        button.setStyleSheet(stylesheet)
         return button
 
     def makeTextArea(self, placeholderText: str, height: int, stylesheet):
