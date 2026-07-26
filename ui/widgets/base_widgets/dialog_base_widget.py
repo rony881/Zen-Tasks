@@ -120,4 +120,8 @@ class DialogBaseWidget(QDialog):
         footer.setSpacing(8)
         footer.setContentsMargins(0, 12, 0, 0)
         return footer
+
+    def get_data(self):
+        """Override this Method to Get the Dialogs Data """
+        ...
         
