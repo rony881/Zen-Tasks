@@ -114,7 +114,7 @@ QComboBox#priority QAbstractItemView::item:hover {
 }
 """
 
-CREATE_TASK_BTN_STYLE = """
+SUBMIT_BTN_STYLE = """
     QPushButton {
         background: #1A73CE;
         color: white;
@@ -126,6 +126,18 @@ CREATE_TASK_BTN_STYLE = """
     }
     QPushButton:hover   { background: #2383E2; }
     QPushButton:pressed { background: #1260B5; }
+"""
+CANCEL_BTN_STYLE = """
+    QPushButton {
+        background: transparent;
+        color: black;
+        border-radius: 6px;
+        padding: 0 24px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+    QPushButton:hover   { background: #F0F0F0; }
+    QPushButton:pressed { background: #C0C0C0; }
 """
 
 TASK_INPUT_STYLE = """
