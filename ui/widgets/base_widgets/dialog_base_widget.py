@@ -1,6 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QComboBox, QDialog, QGraphicsDropShadowEffect, QHBoxLayout, QLabel, QPushButton, QTextEdit, QVBoxLayout, QWidget
+from qfluentwidgets import AMTimePicker
 from ui.theme import CANCEL_BTN_STYLE, CLOSE_BTN_STYLE, SUBMIT_BTN_STYLE, DIALOG_CARD_STYLE
 
 
@@ -116,7 +117,7 @@ class DialogBaseWidget(QDialog):
 
     def makeFooter(
         self,
-        *widgets,
+        *widgets: QPushButton | QComboBox | AMTimePicker,
         submitBtnText: str
     ) -> QHBoxLayout:
         footer = QHBoxLayout()
@@ -141,12 +142,15 @@ class DialogBaseWidget(QDialog):
         footer.addWidget(submit_btn)
         footer.addWidget(cancel_btn)
         
-        self.addLayout(footer)
+        return footer
 
     def get_data(self):
         """Override this Method to Get the Dialogs Data """
         ...
 
     def onSubmit(self):
-        """Submit button of the Dialog Box"""
+        """Override this method for Submit button Action"""
         ...
+
+    def onCancel(self):
+        """Override this method for Cancel button Action"""
