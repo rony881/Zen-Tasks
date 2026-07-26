@@ -1,8 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QComboBox, QDialog, QGraphicsDropShadowEffect, QHBoxLayout, QLabel, QPushButton, QTextEdit, QVBoxLayout, QWidget
-
-from ui.theme import CLOSE_BTN_STYLE, DIALOG_CARD_STYLE
+from ui.theme import CANCEL_BTN_STYLE, CLOSE_BTN_STYLE, SUBMIT_BTN_STYLE, DIALOG_CARD_STYLE
 
 
 class DialogBaseWidget(QDialog):
@@ -115,11 +114,34 @@ class DialogBaseWidget(QDialog):
             combo.setPlaceholderText(placeholder)
         return combo
 
-    def makeFooter(self) -> QHBoxLayout:
+    def makeFooter(
+        self,
+        *widgets,
+        submitBtnText: str
+    ) -> QHBoxLayout:
         footer = QHBoxLayout()
         footer.setSpacing(8)
         footer.setContentsMargins(0, 12, 0, 0)
-        return footer
+
+        if widgets:
+            for widget in widgets:
+                footer.addWidget(widget)
+        footer.addStretch()
+
+        submit_btn = self.makeActionButton(
+            submitBtnText,
+            40,
+            SUBMIT_BTN_STYLE
+        )
+        cancel_btn = self.makeActionButton(
+            "cancel",
+            40,
+            CANCEL_BTN_STYLE
+        )
+        footer.addWidget(submit_btn)
+        footer.addWidget(cancel_btn)
+        
+        self.addLayout(footer)
 
     def get_data(self):
         """Override this Method to Get the Dialogs Data """
