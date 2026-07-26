@@ -124,4 +124,7 @@ class DialogBaseWidget(QDialog):
     def get_data(self):
         """Override this Method to Get the Dialogs Data """
         ...
-        
+
+    def onSubmit(self):
+        """Submit button of the Dialog Box"""
+        ...
