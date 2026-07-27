@@ -1,6 +1,16 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor
-from PyQt6.QtWidgets import QComboBox, QDialog, QGraphicsDropShadowEffect, QHBoxLayout, QLabel, QPushButton, QTextEdit, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import (
+    QComboBox,
+    QDialog,
+    QGraphicsDropShadowEffect,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QTextEdit,
+    QVBoxLayout,
+    QWidget
+)
 from qfluentwidgets import AMTimePicker
 from ui.theme import CANCEL_BTN_STYLE, CLOSE_BTN_STYLE, SUBMIT_BTN_STYLE, DIALOG_CARD_STYLE
 
@@ -62,8 +72,16 @@ class DialogBaseWidget(QDialog):
         """Set Dialog Window size"""
         self.resize(width, height)
 
+    def addLayout(self, layout: QVBoxLayout | QHBoxLayout) -> None:
+        """Add a Layout to Dialog."""
+        self.container_layout.addLayout(layout)
+
+    def addWidget(self, widget: QWidget) -> None:
+        """Add a widget directly to the dialog body."""
+        self.container_layout.addWidget(widget)
+        
     def makeContainer(self, object_name: str, stylesheet):
-        container = QWidget()
+        container = QWidget(self)
         container.setObjectName(object_name)
         container.setStyleSheet(stylesheet)
         return container
@@ -74,14 +92,6 @@ class DialogBaseWidget(QDialog):
         layout.setSpacing(0)
         return layout
 
-    def addLayout(self, layout: QVBoxLayout | QHBoxLayout) -> None:
-        """Add a Layout to Dialog."""
-        self.container_layout.addLayout(layout)
-
-    def addWidget(self, widget: QWidget) -> None:
-        """Add a widget directly to the dialog body."""
-        self.container_layout.addWidget(widget)
-    
     def makeIconButton(self, text: str, size: int, stylesheet) -> QPushButton:
         """Square icon-style button, e.g. the close (✕) button."""
         button = QPushButton(text)
@@ -98,10 +108,10 @@ class DialogBaseWidget(QDialog):
         button.setStyleSheet(stylesheet)
         return button
 
-    def makeTextArea(self, placeholderText: str, height: int, stylesheet):
-        text_area = QTextEdit()
+    def makeTextArea(self, placeholderText: str, fixedHeight: int, stylesheet):
+        text_area = QTextEdit(self)
         text_area.setPlaceholderText(placeholderText)
-        text_area.setFixedHeight(height)
+        text_area.setFixedHeight(fixedHeight)
         text_area.setStyleSheet(stylesheet)
         return text_area
 
@@ -115,6 +125,10 @@ class DialogBaseWidget(QDialog):
             combo.setPlaceholderText(placeholder)
         return combo
 
+    def makeTimePicker(self) -> AMTimePicker:
+        time_picker = AMTimePicker(self)
+        return time_picker
+
     def makeFooter(
         self,
         *widgets: QPushButton | QComboBox | AMTimePicker,
@@ -123,25 +137,20 @@ class DialogBaseWidget(QDialog):
         footer = QHBoxLayout()
         footer.setSpacing(8)
         footer.setContentsMargins(0, 12, 0, 0)
-
-        if widgets:
-            for widget in widgets:
-                footer.addWidget(widget)
+    
+        for widget in widgets:
+            footer.addWidget(widget)
         footer.addStretch()
-
-        submit_btn = self.makeActionButton(
-            submitBtnText,
-            40,
-            SUBMIT_BTN_STYLE
-        )
-        cancel_btn = self.makeActionButton(
-            "cancel",
-            40,
-            CANCEL_BTN_STYLE
-        )
-        footer.addWidget(submit_btn)
-        footer.addWidget(cancel_btn)
-        
+    
+        self.submit_btn = self.makeActionButton(submitBtnText, 40, SUBMIT_BTN_STYLE)
+        self.cancel_btn = self.makeActionButton("Cancel", 40, CANCEL_BTN_STYLE)
+    
+        self.submit_btn.clicked.connect(self.onSubmit)
+        self.cancel_btn.clicked.connect(self.onCancel)
+    
+        footer.addWidget(self.cancel_btn)
+        footer.addWidget(self.submit_btn)
+    
         return footer
 
     def get_data(self):
@@ -154,3 +163,4 @@ class DialogBaseWidget(QDialog):
 
     def onCancel(self):
         """Override this method for Cancel button Action"""
+        self.reject()
