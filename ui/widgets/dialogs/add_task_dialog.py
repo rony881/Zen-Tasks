@@ -1,29 +1,13 @@
-from PyQt6.QtWidgets import (QDialog,
-    QVBoxLayout,
-    QComboBox,
-    QGraphicsDropShadowEffect,
-    QHBoxLayout,
-    QPushButton,
-    QTextEdit,
-    QWidget,
-    QLabel
-)
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QColor
-from qfluentwidgets import AMTimePicker, InfoBar, InfoBarPosition
+from qfluentwidgets import InfoBar, InfoBarPosition
 from config import INFO_BAR_DURATION_SHORT, PRIORITIES,UI_CONFIG
 from core.models.task import Task
-from ui.theme import CLOSE_BTN_STYLE, DIALOG_CARD_STYLE, PRIORITY_STYLE, TASK_INPUT_STYLE
+from ui.theme import PRIORITY_STYLE, TASK_INPUT_STYLE
 from ui.widgets.base_widgets.dialog_base_widget import DialogBaseWidget
 DIALOG_WIDTH = UI_CONFIG["dialog_width"]
 DIALOG_HEIGHT = UI_CONFIG["dialog_height"]
 
 class AddTaskDialog(DialogBaseWidget):
     """Dialog for creating new tasks with time, description, and priority."""
-
-    def __init__(self, parent: QWidget | None):
-        """Initialize the Dialog."""
-        super().__init__(parent)
         
     def _setup_ui(self):
         """Set up the dialog UI components."""
@@ -46,9 +30,8 @@ class AddTaskDialog(DialogBaseWidget):
                 submitBtnText= "Add Task"
             )
         self.addLayout(footer)
-        self._add_shadow()
         
-    def _accdept(self):
+    def onSubmit(self) -> None:
         task = self.task_input.toPlainText().strip()
         priority = self.priority.currentText()
     
@@ -63,4 +46,15 @@ class AddTaskDialog(DialogBaseWidget):
             return
     
         self.accept()
+
+    def get_data(self):
+        time = self.timePicker.getTime().toString("hh:mm AP")
+        task = self.task_input.toPlainText().strip()
+        priority = self.priority.currentText()
+
+        return Task(
+            time,
+            task,
+            priority
+        )
         
