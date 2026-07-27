@@ -130,14 +130,14 @@ SUBMIT_BTN_STYLE = """
 CANCEL_BTN_STYLE = """
     QPushButton {
         background: transparent;
-        color: black;
+        color: #666666;
+        border: 1px solid #a1a1a1;
         border-radius: 6px;
         padding: 0 24px;
         font-size: 14px;
-        font-weight: 700;
     }
     QPushButton:hover   { background: #F0F0F0; }
-    QPushButton:pressed { background: #C0C0C0; }
+    QPushButton:pressed { background: #cdcdcd; }
 """
 
 TASK_INPUT_STYLE = """
@@ -159,7 +159,7 @@ CLOSE_BTN_STYLE = """
 """
 
 DIALOG_CARD_STYLE = """
-    QWidget#card {
+    QWidget#container {
         background: #FFFFFF;
         border-radius: 16px;
         border: 1px solid #e8e8e8;
