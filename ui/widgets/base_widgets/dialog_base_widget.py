@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import (
     QWidget
 )
 from qfluentwidgets import AMTimePicker
+from core.models.task import Task
 from ui.theme import CANCEL_BTN_STYLE, CLOSE_BTN_STYLE, SUBMIT_BTN_STYLE, DIALOG_CARD_STYLE
 
 
@@ -61,7 +62,7 @@ class DialogBaseWidget(QDialog):
         shadow.setBlurRadius(48)
         shadow.setXOffset(0)
         shadow.setYOffset(10)
-        shadow.setColor(QColor(0, 0, 0, 45))
+        shadow.setColor(QColor(0, 0, 0, 60))
         self.container.setGraphicsEffect(shadow)
     
     def setDialogTitle(self, title: str):
@@ -153,11 +154,11 @@ class DialogBaseWidget(QDialog):
     
         return footer
 
-    def get_data(self):
+    def get_data(self) -> Task:
         """Override this Method to Get the Dialogs Data """
         ...
 
-    def onSubmit(self):
+    def onSubmit(self) -> None:
         """Override this method for Submit button Action"""
         ...
 
