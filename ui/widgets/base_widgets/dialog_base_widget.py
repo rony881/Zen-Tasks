@@ -81,13 +81,15 @@ class DialogBaseWidget(QDialog):
         """Add a widget directly to the dialog body."""
         self.container_layout.addWidget(widget)
         
-    def makeContainer(self, object_name: str, stylesheet):
+    def makeContainer(self, object_name: str, stylesheet) -> QWidget:
+        """Make a Contaner Widget."""
         container = QWidget(self)
         container.setObjectName(object_name)
         container.setStyleSheet(stylesheet)
         return container
         
-    def makeVLayout(self, widget: QWidget):
+    def makeVLayout(self, widget: QWidget) -> QVBoxLayout:
+        """Make a Verticle Layout."""
         layout = QVBoxLayout(widget)
         layout.setContentsMargins(24, 5, 24, 18)
         layout.setSpacing(0)
@@ -109,7 +111,7 @@ class DialogBaseWidget(QDialog):
         button.setStyleSheet(stylesheet)
         return button
 
-    def makeTextArea(self, placeholderText: str, fixedHeight: int, stylesheet):
+    def makeTextArea(self, placeholderText: str, fixedHeight: int, stylesheet) -> QTextEdit:
         text_area = QTextEdit(self)
         text_area.setPlaceholderText(placeholderText)
         text_area.setFixedHeight(fixedHeight)
@@ -162,6 +164,6 @@ class DialogBaseWidget(QDialog):
         """Override this method for Submit button Action"""
         ...
 
-    def onCancel(self):
+    def onCancel(self) -> None:
         """Override this method for Cancel button Action"""
         self.reject()
