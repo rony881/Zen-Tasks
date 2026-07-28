@@ -7,11 +7,10 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QPushButton,
-    QTextEdit,
     QVBoxLayout,
     QWidget
 )
-from qfluentwidgets import AMTimePicker
+from qfluentwidgets import AMTimePicker, TextEdit
 from core.models.task import Task
 from ui.theme import CANCEL_BTN_STYLE, CLOSE_BTN_STYLE, SUBMIT_BTN_STYLE, DIALOG_CARD_STYLE
 
@@ -111,8 +110,8 @@ class DialogBaseWidget(QDialog):
         button.setStyleSheet(stylesheet)
         return button
 
-    def makeTextArea(self, placeholderText: str, fixedHeight: int, stylesheet) -> QTextEdit:
-        text_area = QTextEdit(self)
+    def makeTextArea(self, placeholderText: str, fixedHeight: int, stylesheet) -> TextEdit:
+        text_area = TextEdit(self)
         text_area.setPlaceholderText(placeholderText)
         text_area.setFixedHeight(fixedHeight)
         text_area.setStyleSheet(stylesheet)
