@@ -11,9 +11,6 @@ class PageBaseWidget(QWidget):
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(24, 1, 24, 24)
         self.main_layout.setSpacing(16)
-
-    def setPageType(self,type):
-        self.page_type = type
         
     def setPageHeader(self,header: str, button: str | None = None): 
         self.main_layout.addLayout(self.headerFrame(header, button))
