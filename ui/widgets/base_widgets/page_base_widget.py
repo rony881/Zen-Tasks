@@ -30,6 +30,15 @@ class PageBaseWidget(QWidget):
             header_lout.addWidget(self.add_btn)
 
         return header_lout
+
+    def setContentMargins(
+        self,
+        left: int,
+        top: int,
+        right: int,
+        bottom: int
+    ) -> None:
+        self.main_layout.setContentsMargins(left,top,right,bottom)
         
     def addWidget(self,widget: QWidget):
         self.main_layout.addWidget(widget)
@@ -65,7 +74,7 @@ class PageBaseWidget(QWidget):
     def addListContainer(self):
         list_container = self._buildContainerWidget()
         self.list_layout = QVBoxLayout(list_container)
-        self.list_layout.setContentsMargins(6, 4, 6, 4)
+        self.list_layout.setContentsMargins(0, 4, 0, 4)
         self.list_layout.setSpacing(8)
         scroll_area = self.buildScrollArea(list_container)
 
