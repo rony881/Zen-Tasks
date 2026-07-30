@@ -23,9 +23,10 @@ class DailyPage(PageBaseWidget):
 
     def build_ui(self):
         self.setPageHeader("Today", "Add Task")
-        card_area = self._card_area()
-        card_area.addWidget(self.progress_ring())
-        self.addWidget(card_area)
+        self.setListContentMargins(60,4,60,4)
+        # card_area = self._card_area()
+        # card_area.addWidget(self.progress_ring())
+        # self.addWidget(card_area)
         self.addListContainer()
 
         self._refresh_task_list()
@@ -57,7 +58,7 @@ class DailyPage(PageBaseWidget):
             self.list_layout.addWidget(card)
 
         self.list_layout.addStretch(1)
-        self.update_stats()
+        # self.update_stats()
         
     def _add_task(self, task: Task):
         """Add a new task to the task list."""
