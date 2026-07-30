@@ -81,6 +81,12 @@ class PageBaseWidget(QWidget):
 
         self.addWidget(scroll_area)
 
+        
+    def _buildContainerWidget(self) -> QWidget:
+        container = QWidget()
+        container.setStyleSheet("background: transparent;")
+        return container
+
     def setListContentMargins(
         self,
         left: int,
@@ -90,11 +96,6 @@ class PageBaseWidget(QWidget):
     ) -> None:
         self.list_layout.setContentsMargins(left,top,right,bottom)
         
-    def _buildContainerWidget(self) -> QWidget:
-        container = QWidget()
-        container.setStyleSheet("background: transparent;")
-        return container
-
     def buildScrollArea(self, widget):
         """"Build a QScrollArea, add Widget and return the ScrollArea"""
         scroll_area = QScrollArea(self)
