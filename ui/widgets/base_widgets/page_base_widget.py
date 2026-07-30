@@ -9,8 +9,11 @@ class PageBaseWidget(QWidget):
     def __init__(self,parent):
         super().__init__(parent)
         self.main_layout = QVBoxLayout(self)
-        self.main_layout.setContentsMargins(24, 1, 24, 24)
-        self.main_layout.setSpacing(16)
+        self.main_layout.setContentsMargins(24, 0, 24, 24)
+        self.main_layout.setSpacing(30)
+
+        self.list_layout = QVBoxLayout()
+        self.list_layout.setSpacing(8)
         
     def setPageHeader(self,header: str, button: str | None = None): 
         self.main_layout.addLayout(self.headerFrame(header, button))
@@ -73,12 +76,19 @@ class PageBaseWidget(QWidget):
 
     def addListContainer(self):
         list_container = self._buildContainerWidget()
-        self.list_layout = QVBoxLayout(list_container)
-        self.list_layout.setContentsMargins(0, 4, 0, 4)
-        self.list_layout.setSpacing(8)
+        list_container.setLayout(self.list_layout)
         scroll_area = self.buildScrollArea(list_container)
 
         self.addWidget(scroll_area)
+
+    def setListContentMargins(
+        self,
+        left: int,
+        top: int,
+        right: int,
+        bottom: int
+    ) -> None:
+        self.list_layout.setContentsMargins(left,top,right,bottom)
         
     def _buildContainerWidget(self) -> QWidget:
         container = QWidget()
