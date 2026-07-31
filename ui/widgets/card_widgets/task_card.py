@@ -8,6 +8,7 @@ from qfluentwidgets import CardWidget, CheckBox, TransparentToolButton, FluentIc
 from core.models.task import Task
 
 from config import UI_CONFIG
+from ui.widgets.priority_label import PriorityLabel
 HEIGHT = UI_CONFIG["card_height"]
 
 class TaskCard(CardWidget):
@@ -48,8 +49,7 @@ class TaskCard(CardWidget):
         layout.addWidget(self.task_lbl)
         layout.addStretch()
         
-        prio_lbl = QLabel(task.priority)
-        prio_lbl.setStyleSheet("color: #4dabf7;")
+        prio_lbl = PriorityLabel(task.priority)
         layout.addWidget(prio_lbl)
 
         edit_btn = TransparentToolButton(FI.EDIT)

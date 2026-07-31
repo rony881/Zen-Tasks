@@ -31,6 +31,14 @@ TITLE_STYLE = f"""
 
 """
 
+PRIORITY_COLORS = {
+    "Low":      "#4CAF50",
+    "Medium":   "#FF9800",
+    "High":     "#FF5722",
+    "Critical": "#F44336",
+}
+
+
 ADD_BTN_STYLE = """
 QPushButton {
     background    : #2383E2;
