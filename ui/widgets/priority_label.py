@@ -11,16 +11,16 @@ class PriorityLabel(QLabel):
         priority_color = self.get_priority_color(self.priority)
         self.set_priority_color(priority_color)
 
-    def get_priority_color(self, priority: str) -> str:
-        return PRIORITY_COLORS.get(priority, "#9E9E9E")
-
-    def set_priority_color(self, colour: str) -> None:
+    def get_priority_color(self, priority: str) -> dict:
+        return PRIORITY_COLORS.get(priority, {"bg": "#F5F5F5", "text": "#616161"})
+    
+    def set_priority_color(self, colours: dict) -> None:
         self.setStyleSheet(f"""
             QLabel {{
-                color: white;
-                background-color: {colour};
-                border-radius: 8px;
-                padding: 2px 10px;
+                color: {colours['text']};
+                background-color: {colours['bg']};
+                border-radius: 6px;
+                padding: 10px 10px;
                 font-weight: 600;
                 font-size: 11px;
             }}
