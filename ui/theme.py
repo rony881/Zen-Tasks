@@ -32,10 +32,10 @@ TITLE_STYLE = f"""
 """
 
 PRIORITY_COLORS = {
-    "Low":      "#4CAF50",
-    "Medium":   "#FF9800",
-    "High":     "#FF5722",
-    "Critical": "#F44336",
+    "Low":      {"bg": "#E8F5E9", "text": "#2E7D32"},  # soft green
+    "Medium":   {"bg": "#FFF3E0", "text": "#EF6C00"},  # soft amber
+    "High":     {"bg": "#FBE9E7", "text": "#D84315"},  # soft deep orange
+    "Critical": {"bg": "#FFEBEE", "text": "#C62828"},  # soft red
 }
 
 
