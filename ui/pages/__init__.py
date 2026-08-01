@@ -1,7 +1,4 @@
 """
-
-This Folder Contains : 
-    * Weekly Page 
-    * Daily Page
-
+Pages for the application.
+Contains Pages like today, Sleep Tracker page for building the user interface.
 """
