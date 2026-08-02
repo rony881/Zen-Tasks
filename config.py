@@ -5,7 +5,6 @@ This File Contains all constants and settings used throughout the Application
 
 from pathlib import Path
 from datetime import datetime
-from tkinter.constants import S
 
 # ======== Apllication Data ================
 DAYS = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
