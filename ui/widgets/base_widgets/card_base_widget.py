@@ -19,6 +19,15 @@ class CardBaseWidget(CardWidget):
         self.main_layout.setSpacing(12)
         self.main_layout.setContentsMargins(12, 8, 12, 8)
 
+        self.setStyleSheet(
+            """
+            CardWidget{
+                border: 1px solid #999999;
+                border-radius: 6px;
+            }
+            """
+        )
+
     def cardHeight(self) -> int:
         return HEIGHT
 
