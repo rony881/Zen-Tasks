@@ -8,10 +8,11 @@ from qfluentwidgets import CardWidget, CheckBox, TransparentToolButton, FluentIc
 from core.models.task import Task
 
 from config import UI_CONFIG
+from ui.widgets.base_widgets.card_base_widget import CardBaseWidget
 from .priority_label import PriorityLabel 
 HEIGHT = UI_CONFIG["card_height"]
 
-class TaskCard(CardWidget):
+class TaskCard(CardBaseWidget):
     """Card widget displaying a single task with checkbox, edit, and delete buttons."""
     checkbox_changed = pyqtSignal(bool)
     edit_clicked = pyqtSignal(Task)
@@ -20,50 +21,40 @@ class TaskCard(CardWidget):
     def __init__(self, task: Task):
         """Initialize task card with task data."""
         super().__init__()
-        self.setFixedHeight(HEIGHT)
         self.task = task
-        self.setStyleSheet(
-            """
-            CardWidget{
-                border: 1px solid #999999;
-                border-radius: 6px;
-            }
-            """
-        )
-
-        layout = QHBoxLayout(self)
-        layout.setContentsMargins(12,8,12,8)
-        layout.setSpacing(12)
 
         self.checkbox = CheckBox()
         self.checkbox.setChecked(task.done)
         self.checkbox.toggled.connect(self.on_checked)
-        layout.addWidget(self.checkbox)
+        self.main_layout.addWidget(self.checkbox)
 
         time_lbl = QLabel(task.time)
         time_lbl.setStyleSheet("color: #333333")
-        layout.addWidget(time_lbl)
+        self.main_layout.addWidget(time_lbl)
 
         self.task_lbl = QLabel(task.task)
         self.task_lbl.setStyleSheet("color: #333333")
-        layout.addWidget(self.task_lbl)
-        layout.addStretch()
+        self.main_layout.addWidget(self.task_lbl)
+        self.main_layout.addStretch()
         
         prio_lbl = PriorityLabel(task.priority)
-        layout.addWidget(prio_lbl)
+        self.main_layout.addWidget(prio_lbl)
 
         edit_btn = TransparentToolButton(FI.EDIT)
         edit_btn.clicked.connect(lambda: self.edit_clicked.emit(self.task))
-        layout.addWidget(edit_btn)
+        self.main_layout.addWidget(edit_btn)
         
         delete_btn = TransparentToolButton(FI.DELETE)
         delete_btn.clicked.connect(lambda: self.delete_clicked.emit(self.task))
-        layout.addWidget(delete_btn)
+        self.main_layout.addWidget(delete_btn)
 
     def on_checked(self, checked):
         """Handle checkbox state change."""
         self.task.done = checked
         self.checkbox_changed.emit(checked)
+
+    def createDefaultLayout(self, parent) -> QHBoxLayout:
+        return QHBoxLayout(parent)
         
 class SimpleCard(CardWidget):
     """Simple card widget for containing other widgets."""
