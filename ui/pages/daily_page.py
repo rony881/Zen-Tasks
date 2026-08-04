@@ -7,7 +7,7 @@ from core.services.task_service import load_todays_tasks, save_todays_tasks
 from core.models.task import Task
 from ui.widgets.dialogs.add_task_dialog import AddTaskDialog
 from ui.widgets.dialogs.edit_task_dialog import EditTaskDialog
-from ui.widgets.card_widgets.task_card import SimpleCard, TaskCard
+from ui.widgets.card_widgets.task_card import TaskCard
 from ui.widgets.base_widgets.page_base_widget import PageBaseWidget
 from core.utils.logger import logger
 
@@ -31,9 +31,6 @@ class DailyPage(PageBaseWidget):
 
         self._refresh_task_list()
 
-    def _card_area(self):
-        card = SimpleCard()
-        return card
         
     def progress_ring(self):
         self.progress = ProgressRing()

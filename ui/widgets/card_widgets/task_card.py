@@ -55,17 +55,3 @@ class TaskCard(CardBaseWidget):
 
     def createDefaultLayout(self, parent) -> QHBoxLayout:
         return QHBoxLayout(parent)
-        
-class SimpleCard(CardWidget):
-    """Simple card widget for containing other widgets."""
-    
-    def __init__(self, parent=None):
-        """Initialize simple card with vertical layout."""
-        super().__init__(parent)
-        self.card_layout = QVBoxLayout(self)
-        self.card_layout.setContentsMargins(20, 16, 20, 16)
-        self.card_layout.setSpacing(16)
-        
-    def addWidget(self,widget):
-        """Set the widget to be contained in this card."""
-        self.card_layout.addWidget(widget)
