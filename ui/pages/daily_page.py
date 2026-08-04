@@ -81,8 +81,6 @@ class DailyPage(PageBaseWidget):
         completed = sum(1 for t in self.tasks if t.done)
         percent = int(completed / total * 100) if total else 0
         
-        self.progress.setValue(percent)
-
     def onAddButtonClicked(self):
         """One Add Button Clicked"""
         dialog = AddTaskDialog(self)
