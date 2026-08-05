@@ -34,7 +34,7 @@ class DialogBaseWidget(QDialog):
 
         self.header = QHBoxLayout()
         self.header.setContentsMargins(0,0,0,0)
-        self.addLayout(self.header)
+        self.add(self.header)
 
         self.title = QLabel()
         self.title.setStyleSheet("color:#666666;font-size:17px;")
@@ -72,7 +72,7 @@ class DialogBaseWidget(QDialog):
         """Set Dialog Window size"""
         self.resize(width, height)
 
-    def addLayout(self, layout: QVBoxLayout | QHBoxLayout) -> None:
+    def add(self, layout: QVBoxLayout | QHBoxLayout) -> None:
         """Add a Layout to Dialog."""
         self.container_layout.addLayout(layout)
 
