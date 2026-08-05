@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QFrame, QHBoxLayout, QScrollArea, QTabWidget, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import QFrame, QHBoxLayout, QLayout, QScrollArea, QTabWidget, QVBoxLayout, QWidget
 from qfluentwidgets import FluentIcon, PrimaryPushButton, StrongBodyLabel, TableWidget, TitleLabel
 from ui.theme import ADD_BTN_STYLE, TAB_WIDG_STYLE, TITLE_STYLE
 
@@ -42,12 +42,14 @@ class PageBaseWidget(QWidget):
         bottom: int
     ) -> None:
         self.main_layout.setContentsMargins(left,top,right,bottom)
-        
-    def addWidget(self,widget: QWidget):
-        self.main_layout.addWidget(widget)
-        
-    def addLayout(self,layout):
-        self.main_layout.addLayout(layout)
+
+    def add(self, item):
+        if isinstance(item, QWidget):
+            self.main_layout.addWidget(item)
+        elif isinstance(item, QLayout):
+            self.main_layout.addLayout(item)
+        else:
+            raise TypeError(f"Unsupported type: {type(item).__name__}")
 
     def addStretch(self):
         self.main_layout.addStretch()
@@ -68,7 +70,7 @@ class PageBaseWidget(QWidget):
             for button in buttons:
                 title_layout.addWidget(button)
 
-        self.addLayout(title_layout)
+        self.add(title_layout)
 
     def buildTitle(self, title: str) -> StrongBodyLabel:
         """ Build a Title and return Title as a Label """
@@ -79,7 +81,7 @@ class PageBaseWidget(QWidget):
         list_container.setLayout(self.list_layout)
         scroll_area = self.buildScrollArea(list_container)
 
-        self.addWidget(scroll_area)
+        self.add(scroll_area)
 
         
     def _buildContainerWidget(self) -> QWidget:
