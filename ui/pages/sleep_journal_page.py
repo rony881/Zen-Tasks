@@ -14,9 +14,9 @@ class SleepJournal(PageBaseWidget):
 
     def build_ui(self):
         self.setPageHeader("Sleep Tracker", "Add Entry")
-        self.addLayout(self.statistics())
+        self.add(self.statistics())
         self.addTitle("Sleep History")
-        self.addWidget(SleepHistory(self))
+        self.add(SleepHistory(self))
         
     def statistics(self):
         # ---- Stat cards ----

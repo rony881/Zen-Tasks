@@ -25,7 +25,7 @@ class WeeklyPage(PageBaseWidget):
         """Build the page header and tab widget."""
         self.setPageHeader("Weekly Schedule", "Add Task")
         self.tab_widget = self._build_tab_widget()
-        self.addWidget(self.tab_widget)
+        self.add(self.tab_widget)
 
     def _build_tab_widget(self) -> QTabWidget:
         """Build the tab widget containing schedule tables for each day."""

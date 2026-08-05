@@ -29,7 +29,7 @@ class AddTaskDialog(DialogBaseWidget):
                 self.priority,
                 submitBtnText= "Add Task"
             )
-        self.addLayout(footer)
+        self.add(footer)
         
     def onSubmit(self) -> None:
         task = self.task_input.toPlainText().strip()
