@@ -34,7 +34,7 @@ class DialogBaseWidget(QDialog):
 
         self.header = QHBoxLayout()
         self.header.setContentsMargins(0,0,0,0)
-        self.add(self.header)
+        self.addLayout(self.header)
 
         self.title = QLabel()
         self.title.setStyleSheet("color:#666666;font-size:17px;")
@@ -72,13 +72,16 @@ class DialogBaseWidget(QDialog):
         """Set Dialog Window size"""
         self.resize(width, height)
 
-    def add(self, layout: QVBoxLayout | QHBoxLayout) -> None:
-        """Add a Layout to Dialog."""
-        self.container_layout.addLayout(layout)
-
-    def addWidget(self, widget: QWidget) -> None:
-        """Add a widget directly to the dialog body."""
-        self.container_layout.addWidget(widget)
+    def add(self, item) -> None:
+        """Add a widget or layout to the dialog."""
+        if isinstance(item, QWidget):
+            self.container_layout.addWidget(item)
+        elif isinstance(item, QLayout):
+            self.container_layout.addLayout(item)
+        else:
+            raise TypeError(
+                f"Expected QWidget or QLayout, got {type(item).__name__}"
+            )
         
     def makeContainer(self, object_name: str, stylesheet) -> QWidget:
         """Make a Contaner Widget."""
