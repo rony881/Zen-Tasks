@@ -46,8 +46,13 @@ class CardBaseWidget(CardWidget):
     ) -> None:
         self.main_layout.setContentsMargins(left, top, right, bottom)
 
-    def addWidget(self, widget: QWidget) -> None:
-        self.main_layout.addWidget(widget)
-
-    def addLayout(self, layout: QLayout) -> None:
-        self.main_layout.addLayout(layout)
+    def add(self, item) -> None:
+        """Add a widget or layout to the Card."""
+        if isinstance(item, QWidget):
+            self.main_layout.addWidget(item)
+        elif isinstance(item, QLayout):
+            self.main_layout.addLayout(item)
+        else:
+            raise TypeError(
+                f"Expected QWidget or QLayout, got {type(item).__name__}"
+            )
