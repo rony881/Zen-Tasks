@@ -1,7 +1,7 @@
 from qfluentwidgets import FluentWindow, FluentIcon as FI
 from ui.pages.sleep_journal_page import SleepJournal
 from ui.pages.weekly_page import WeeklyPage
-from ui.pages.daily_page import DailyPage
+from ui.pages.todays_page import DailyPage
 from config import UI_CONFIG
 from core.utils.logger import logger
 

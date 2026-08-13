@@ -19,7 +19,7 @@ class AddTaskDialog(DialogBaseWidget):
             110,
             TASK_INPUT_STYLE
         )
-        self.addWidget(self.task_input)
+        self.add(self.task_input)
         
         self.timePicker = self.makeTimePicker()
         self.priority = self.makeComboBox(PRIORITIES, "priority", PRIORITY_STYLE)

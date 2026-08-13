@@ -6,6 +6,7 @@ from PyQt6.QtWidgets import (
     QGraphicsDropShadowEffect,
     QHBoxLayout,
     QLabel,
+    QLayout,
     QPushButton,
     QVBoxLayout,
     QWidget
@@ -34,7 +35,7 @@ class DialogBaseWidget(QDialog):
 
         self.header = QHBoxLayout()
         self.header.setContentsMargins(0,0,0,0)
-        self.addLayout(self.header)
+        self.add(self.header)
 
         self.title = QLabel()
         self.title.setStyleSheet("color:#666666;font-size:17px;")
