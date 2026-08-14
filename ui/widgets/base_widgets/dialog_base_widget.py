@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QWidget
 )
-from qfluentwidgets import AMTimePicker, TextEdit
+from qfluentwidgets import AMTimePicker, StrongBodyLabel, TextEdit
 from core.models.task import Task
 from ui.theme import CANCEL_BTN_STYLE, CLOSE_BTN_STYLE, SUBMIT_BTN_STYLE, DIALOG_CARD_STYLE
 
@@ -98,6 +98,11 @@ class DialogBaseWidget(QDialog):
         layout.setSpacing(0)
         return layout
 
+    def makeLabel(self, text: str) -> QLabel:
+        title = StrongBodyLabel(text)
+        title.setObjectName("title")
+        return title
+
     def makeIconButton(self, text: str, size: int, stylesheet) -> QPushButton:
         """Square icon-style button, e.g. the close (✕) button."""
         button = QPushButton(text)
@@ -159,7 +164,7 @@ class DialogBaseWidget(QDialog):
     
         return footer
 
-    def get_data(self) -> Task:
+    def get_data(self) -> Task | dict:
         """Override this Method to Get the Dialogs Data """
         ...
 
