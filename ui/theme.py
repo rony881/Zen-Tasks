@@ -87,7 +87,7 @@ QTabBar::tab:selected {
 """
 
 PRIORITY_STYLE = """
-QComboBox#priority {
+QComboBox {
     color: #6B6B69;
     background: transparent;
     border: 1px solid #cccccc;
@@ -98,25 +98,25 @@ QComboBox#priority {
     min-width: 100px;
 }
 
-QComboBox#priority QAbstractItemView {
+QComboBox QAbstractItemView {
     background: white;
     border: 1px solid #777777;
     border-radius: 6px;
     outline: none;
 }
 
-QComboBox#priority QAbstractItemView::item {
+QComboBox QAbstractItemView::item {
     color: #6B6B69;
     padding: 6px 10px;
     min-height: 24px;
 }
 
-QComboBox#priority QAbstractItemView::item:selected {
+QComboBox QAbstractItemView::item:selected {
     background: #2383E2;
     color: white;
 }
 
-QComboBox#priority QAbstractItemView::item:hover {
+QComboBox QAbstractItemView::item:hover {
     background: #1A73CE;
     color: #ffffff;
 }
