@@ -1,14 +1,16 @@
 from PyQt6.QtWidgets import QAbstractItemView, QGridLayout,QTableWidgetItem
 from qfluentwidgets import FluentIcon as FI, TableWidget
-from core.services.sleep_services import load_sleep_logs
+from core.services.sleep_services import load_sleep_logs, save_sleep_logs
 from core.utils.logger import logger
 from ui.widgets.base_widgets.page_base_widget import PageBaseWidget
 from ui.widgets.card_widgets.stats_card import StatsCard
+from ui.widgets.dialogs.add_sleep_entry_dialog import AddSleepEntryDialog
 
 
 class SleepJournal(PageBaseWidget):
     def __init__(self, parent):
         super().__init__(parent)
+        self.sleep_logs = load_sleep_logs()
 
         self.build_ui()
 
@@ -16,7 +18,8 @@ class SleepJournal(PageBaseWidget):
         self.setPageHeader("Sleep Tracker", "Add Entry")
         self.add(self.statistics())
         self.addTitle("Sleep History")
-        self.add(SleepHistory(self))
+        self.history = SleepHistory(self, self.sleep_logs)
+        self.add(self.history)
         
     def statistics(self):
         # ---- Stat cards ----
@@ -52,15 +55,18 @@ class SleepJournal(PageBaseWidget):
         return statsGrid
 
     def onAddButtonClicked(self):
-        self.avg_sleep.set_Value(7,"Hours")
-        self.consistency.set_Value(4,"Nights")
-        self.sleep_dbt.set_Value(2,"Hours")
-        self.streak.set_Value(4,"Nights")
-    
+        dialog = AddSleepEntryDialog(self)
+        if dialog.exec():
+            log = dialog.get_data()
+            self.sleep_logs.append(log)
+            save_sleep_logs(self.sleep_logs)
+            self.history.reload(self.sleep_logs)
+
+            
 class SleepHistory(TableWidget):
-    def __init__(self, parent):
+    def __init__(self, parent, logs=None):
         super().__init__(parent)
-        self.sleep_logs = load_sleep_logs()
+        self.sleep_logs = logs if logs is not None else load_sleep_logs()
 
         self.setColumnCount(7)
         self.setHorizontalHeaderLabels([
@@ -112,4 +118,9 @@ class SleepHistory(TableWidget):
                 QTableWidgetItem(str(value))
             )
 
-        logger.info("New Sleep Log Added Successfully")
+    def reload(self, logs: list[dict]):
+        """Clear and rebuild the table with the given logs."""
+        self.sleep_logs = logs
+        self.setRowCount(0)
+        for log in self.sleep_logs:
+            self.add_sleep_log(log)
