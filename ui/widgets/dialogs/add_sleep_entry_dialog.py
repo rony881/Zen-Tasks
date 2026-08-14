@@ -3,7 +3,7 @@ from PyQt6.QtCore import QTime
 from PyQt6.QtWidgets import QHBoxLayout, QLabel, QSpinBox
 from qfluentwidgets import InfoBar, InfoBarPosition
 from config import INFO_BAR_DURATION_SHORT
-from ui.theme import TASK_INPUT_STYLE
+from ui.theme import PRIORITY_STYLE, TASK_INPUT_STYLE
 from ui.widgets.base_widgets.dialog_base_widget import DialogBaseWidget
 
 FIELD_LABEL_STYLE = "color:#666666;font-size:14px;"
@@ -26,52 +26,51 @@ class AddSleepEntryDialog(DialogBaseWidget):
     def _setup_ui(self):
         """Set up the dialog UI components."""
         self.setDialogTitle("Add Sleep Entry")
-        self.setDialogSize()
+        self.setDialogSize(600, 550)
 
+        # Bedtime Label and Picker
         self.bedtime_picker = self.makeTimePicker()
+        self.bedtime_lbl = self.makeLabel("Bedtime")
+        self.add(self.bedtime_lbl)
+        self.add(self.bedtime_picker)
+
+        # Wakeup Label and Picker
         self.wakeup_picker = self.makeTimePicker()
+        self.wakeup_lbl = self.makeLabel("Wake Time")
+        self.add(self.wakeup_lbl)
+        self.add(self.wakeup_picker)
 
-        times_row = self._make_field_row(
-            ("Bedtime", self.bedtime_picker),
-            ("Wake", self.wakeup_picker),
-        )
-        self.add(times_row)
-
+        # Quality Label and Picker
         self.quality = self.makeComboBox(
-            QUALITY_OPTIONS, "quality", INPUT_STYLE, placeholder="Quality"
+            items=QUALITY_OPTIONS,
+            object_name="quality",
+            stylesheet=PRIORITY_STYLE,
+            placeholder="Quality"
         )
+        self.quality_lbl = self.makeLabel("Sleep Quality")
+        self.add(self.quality_lbl)
+        self.add(self.quality)
+
+        # Awakenings Label and Picker
         self.awakenings = QSpinBox()
         self.awakenings.setRange(0, 20)
         self.awakenings.setValue(0)
         self.awakenings.setStyleSheet(INPUT_STYLE)
+        self.awakenings_lbl = self.makeLabel("Awakenings")
+        self.add(self.awakenings_lbl)
+        self.add(self.awakenings)
 
-        details_row = self._make_field_row(
-            ("Quality", self.quality),
-            ("Awakenings", self.awakenings),
-        )
-        self.add(details_row)
-
-        self.mood_input = self.makeTextArea(
-            "How was your mood? (optional)",
+        self.note_input = self.makeTextArea(
+            "Dreams, caffeine, stress, anything worth remembering...",
             70,
             TASK_INPUT_STYLE,
         )
-        self.add(self.mood_input)
+        self.note_lbl = self.makeLabel("Note (optional)")
+        self.add(self.note_lbl)
+        self.add(self.note_input)
 
         footer = self.makeFooter(submitBtnText="Add Entry")
         self.add(footer)
-
-    def _make_field_row(self, *fields) -> QHBoxLayout:
-        """Build a horizontal row of labelled input widgets."""
-        row = QHBoxLayout()
-        row.setSpacing(8)
-        for label_text, widget in fields:
-            label = QLabel(label_text)
-            label.setStyleSheet(FIELD_LABEL_STYLE)
-            row.addWidget(label)
-            row.addWidget(widget)
-        row.addStretch(1)
-        return row
 
     def onSubmit(self) -> None:
         """Validate the entry and close the dialog."""
@@ -99,7 +98,7 @@ class AddSleepEntryDialog(DialogBaseWidget):
             ),
             "quality": self.quality.currentText(),
             "awakenings": self.awakenings.value(),
-            "mood": self.mood_input.toPlainText().strip(),
+            "mood": self.note_input.toPlainText().strip(),
         }
 
     @staticmethod
