@@ -24,9 +24,6 @@ class DailyPage(PageBaseWidget):
     def build_ui(self):
         self.setPageHeader("Today", "Add Task")
         self.setListContentMargins(60,4,60,4)
-        # card_area = self._card_area()
-        # card_area.addWidget(self.progress_ring())
-        # self.addWidget(card_area)
         self.addListContainer()
 
         self._refresh_task_list()
@@ -49,13 +46,13 @@ class DailyPage(PageBaseWidget):
 
         for task in self.tasks:
             card = TaskCard(task)
-            card.checkbox_changed.connect(self.update_stats)
+            card.checkbox_changed.connect(self._on_task_checked)
             card.edit_clicked.connect(self.onUpdateButtonClicked)
             card.delete_clicked.connect(self._on_delete_task)
             self.list_layout.addWidget(card)
 
         self.list_layout.addStretch(1)
-        # self.update_stats()
+
         
     def _add_task(self, task: Task):
         """Add a new task to the task list."""
@@ -72,11 +69,10 @@ class DailyPage(PageBaseWidget):
             parent=self,
         )
 
-    def update_stats(self, checked=None):
-        """Update progress ring based on completed tasks."""
-        total = len(self.tasks)
-        completed = sum(1 for t in self.tasks if t.done)
-        percent = int(completed / total * 100) if total else 0
+    def _on_task_checked(self, checked=None):
+        """Save the task list after a task is checked/unchecked."""
+        save_todays_tasks(self.tasks)
+        logger.info(f"Task checked: {checked}")
         
     def onAddButtonClicked(self):
         """One Add Button Clicked"""
