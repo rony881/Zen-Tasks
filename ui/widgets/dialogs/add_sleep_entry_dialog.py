@@ -1,13 +1,16 @@
 from datetime import datetime
+
 from PyQt6.QtCore import QTime
-from PyQt6.QtWidgets import QHBoxLayout, QLabel, QSpinBox
+from PyQt6.QtWidgets import QSpinBox
 from qfluentwidgets import InfoBar, InfoBarPosition
+
 from config import INFO_BAR_DURATION_SHORT
-from ui.theme import PRIORITY_STYLE, TASK_INPUT_STYLE
+from ui.theme import PRIORITY_STYLE, TASK_INPUT_STYLE, ADD_BTN_STYLE
 from ui.widgets.base_widgets.dialog_base_widget import DialogBaseWidget
 
-FIELD_LABEL_STYLE = "color:#666666;font-size:14px;"
+
 QUALITY_OPTIONS = ["Good", "Fair", "Poor"]
+
 INPUT_STYLE = """
 QComboBox, QSpinBox {
     color: #444444;
@@ -26,56 +29,53 @@ class AddSleepEntryDialog(DialogBaseWidget):
     def _setup_ui(self):
         """Set up the dialog UI components."""
         self.setDialogTitle("Add Sleep Entry")
-        self.setDialogSize(600, 550)
 
-        # Bedtime Label and Picker
+        # Bedtime
+        self.add(self.makeLabel("Bedtime"))
         self.bedtime_picker = self.makeTimePicker()
-        self.bedtime_lbl = self.makeLabel("Bedtime")
-        self.add(self.bedtime_lbl)
         self.add(self.bedtime_picker)
 
-        # Wakeup Label and Picker
+        # Wake time
+        self.add(self.makeLabel("Wake Time"))
         self.wakeup_picker = self.makeTimePicker()
-        self.wakeup_lbl = self.makeLabel("Wake Time")
-        self.add(self.wakeup_lbl)
         self.add(self.wakeup_picker)
 
-        # Quality Label and Picker
+        # Sleep quality
+        self.add(self.makeLabel("Sleep Quality"))
         self.quality = self.makeComboBox(
             items=QUALITY_OPTIONS,
             object_name="quality",
             stylesheet=PRIORITY_STYLE,
-            placeholder="Quality"
+            placeholder="Quality",
         )
-        self.quality_lbl = self.makeLabel("Sleep Quality")
-        self.add(self.quality_lbl)
         self.add(self.quality)
 
-        # Awakenings Label and Picker
+        # Awakenings
+        self.add(self.makeLabel("Awakenings"))
         self.awakenings = QSpinBox()
         self.awakenings.setRange(0, 20)
         self.awakenings.setValue(0)
         self.awakenings.setStyleSheet(INPUT_STYLE)
-        self.awakenings_lbl = self.makeLabel("Awakenings")
-        self.add(self.awakenings_lbl)
         self.add(self.awakenings)
 
+        # Note
+        self.add(self.makeLabel("Note (optional)"))
         self.note_input = self.makeTextArea(
             "Dreams, caffeine, stress, anything worth remembering...",
             70,
             TASK_INPUT_STYLE,
         )
-        self.note_lbl = self.makeLabel("Note (optional)")
-        self.add(self.note_lbl)
         self.add(self.note_input)
 
-        footer = self.makeFooter(submitBtnText="Add Entry")
-        self.add(footer)
+        self.setSubmitButtonText(
+            "Add Entry",
+            object_name="add_entry_button",
+            stylesheet=ADD_BTN_STYLE,
+        )
 
-    def onSubmit(self) -> None:
-        """Validate the entry and close the dialog."""
-        quality = self.quality.currentText()
-        if not quality:
+    def validate(self) -> bool:
+        """Validate the sleep entry before submitting."""
+        if not self.quality.currentText():
             InfoBar.error(
                 title="Entry not added",
                 content="Quality cannot be empty",
@@ -83,19 +83,20 @@ class AddSleepEntryDialog(DialogBaseWidget):
                 position=InfoBarPosition.TOP,
                 parent=self,
             )
-            return
-        self.accept()
+            return False
+
+        return True
 
     def get_data(self) -> dict:
         """Return the sleep entry as a dictionary."""
+        bedtime = self.bedtime_picker.getTime()
+        wakeup = self.wakeup_picker.getTime()
+
         return {
             "date": datetime.now().strftime("%Y-%m-%d"),
-            "bedtime": self.bedtime_picker.getTime().toString("hh:mm AP"),
-            "wakeup": self.wakeup_picker.getTime().toString("hh:mm AP"),
-            "duration": self._compute_duration(
-                self.bedtime_picker.getTime(),
-                self.wakeup_picker.getTime(),
-            ),
+            "bedtime": bedtime.toString("hh:mm AP"),
+            "wakeup": wakeup.toString("hh:mm AP"),
+            "duration": self._compute_duration(bedtime, wakeup),
             "quality": self.quality.currentText(),
             "awakenings": self.awakenings.value(),
             "mood": self.note_input.toPlainText().strip(),
@@ -103,10 +104,13 @@ class AddSleepEntryDialog(DialogBaseWidget):
 
     @staticmethod
     def _compute_duration(start: QTime, end: QTime) -> str:
-        """Return duration between two times, handling overnight sleeps."""
-        secs = start.secsTo(end)
-        if secs <= 0:
-            secs += 24 * 3600
-        hours, rem = divmod(secs, 3600)
-        minutes = rem // 60
+        """Return duration between two times, handling overnight sleep."""
+        seconds = start.secsTo(end)
+
+        if seconds <= 0:
+            seconds += 24 * 60 * 60
+
+        hours, remainder = divmod(seconds, 3600)
+        minutes = remainder // 60
+
         return f"{hours:02d}:{minutes:02d}"
