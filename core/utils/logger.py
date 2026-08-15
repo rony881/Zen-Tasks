@@ -6,6 +6,9 @@ Provides tracking of application behavior
 import logging
 import sys
 
+if sys.stdout is not None:
+    sys.stdout.reconfigure(errors="replace")
+
 def setup_logger(name: str = "Zen", level: int = logging.INFO):
     """this set up and return a configure logger
 
