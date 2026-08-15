@@ -1,6 +1,7 @@
 from PyQt6.QtCore import QTime
 from core.models.task import Task
 from core.utils.logger import logger
+from ui.theme import ADD_BTN_STYLE
 from ui.widgets.dialogs.add_task_dialog import AddTaskDialog
 
 
@@ -12,11 +13,14 @@ class EditTaskDialog(AddTaskDialog):
         self.task = task
         super().__init__(parent)
 
+    def _setup_ui(self):
+        super()._setup_ui()
         self.setWindowTitle("Edit Task")
-        self.title.setText("Edit Task")
-        self.submit_btn.setText("Save Changes")
-
-        logger.info(f"Opening EditTaskDialog for task: {task.task}")
+        self.setSubmitButtonText(
+            "Save Changes",
+            object_name="edit_task_button",
+            stylesheet=ADD_BTN_STYLE
+        )
         self._fill_up_dialog()
 
     def _fill_up_dialog(self):
