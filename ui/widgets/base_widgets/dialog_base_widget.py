@@ -1,6 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QComboBox,
+    QHBoxLayout,
     QLayout,
     QPushButton,
     QVBoxLayout,
@@ -85,6 +86,13 @@ class DialogBaseWidget(MessageBoxBase):
         layout = QVBoxLayout(widget)
         layout.setContentsMargins(24, 5, 24, 18)
         layout.setSpacing(0)
+        return layout
+
+    def makeHLayout(self) -> QHBoxLayout:
+        """Make a vertical layout."""
+        layout = QHBoxLayout()
+        layout.setContentsMargins(0, 5, 0, 5)
+        layout.setSpacing(10)
         return layout
 
     def makeLabel(self, text: str) -> StrongBodyLabel:
