@@ -150,7 +150,8 @@ CANCEL_BTN_STYLE = """
 
 TASK_INPUT_STYLE = """
     QTextEdit {
-        border: none;
+        border: 1px solid #cccccc;
+        border-radius: 5px;
         font-size: 17px;
         color: #444444;
         background: transparent;
