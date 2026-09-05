@@ -1,0 +1,22 @@
+[project]
+name = "zen"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Rony Biswas", email = "ronybiswasinnovative@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "darkdetect==0.8.0",
+    "pyqt6==6.11.0",
+    "pyqt6-fluent-widgets==1.11.2",
+    "pyqt6-frameless-window==0.8.1",
+]
+
+[project.scripts]
+zen = "zen:main"
+
+[build-system]
+requires = ["uv_build>=0.12.9,<0.13.0"]
+build-backend = "uv_build"
