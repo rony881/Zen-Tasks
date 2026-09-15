@@ -1,7 +1,7 @@
-from config import current_day
-from core.db import connection
-from core.models.task import Task
-from core.utils.logger import logger
+from zen.config import current_day
+from zen.core.db import connection
+from zen.core.models.task import Task
+from zen.core.utils.logger import logger
 
 _DAY_KEY = "last_loaded_day"
 

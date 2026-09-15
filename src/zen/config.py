@@ -3,8 +3,8 @@ This File is Centralized Configuration for the Appllication.
 This File Contains all constants and settings used throughout the Application
 """
 
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 # ======== Apllication Data ================
 PRIORITIES = ["Low", "Medium", "High", "Critical"]

@@ -14,7 +14,7 @@ from qfluentwidgets import (
     SubtitleLabel,
     TextEdit,
 )
-from core.models.task import Task
+from zen.core.models.task import Task
 
 
 class DialogBaseWidget(MessageBoxBase):

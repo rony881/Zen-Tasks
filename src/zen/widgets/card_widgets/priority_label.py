@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QLabel
 from PyQt6.QtCore import Qt
-from ui.theme import PRIORITY_COLORS
 
+from zen.theme import PRIORITY_COLORS
 
 class PriorityLabel(QLabel):
     def __init__(self, priority: str):

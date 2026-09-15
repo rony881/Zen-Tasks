@@ -1,15 +1,15 @@
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import (
     QHBoxLayout,
-    QVBoxLayout,
     QLabel,
 )
-from qfluentwidgets import CardWidget, CheckBox, TransparentToolButton, FluentIcon as FI
-from core.models.task import Task
+from qfluentwidgets import CheckBox, TransparentToolButton, FluentIcon as FI
 
-from config import UI_CONFIG
-from ui.widgets.base_widgets.card_base_widget import CardBaseWidget
+from zen.core.models.task import Task
+from zen.config import UI_CONFIG
+from zen.widgets.base_widgets.card_base_widget import CardBaseWidget
 from .priority_label import PriorityLabel 
+
 HEIGHT = UI_CONFIG["card_height"]
 
 class TaskCard(CardBaseWidget):

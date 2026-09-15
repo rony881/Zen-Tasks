@@ -4,9 +4,9 @@ from PyQt6.QtCore import QTime
 from PyQt6.QtWidgets import QSpinBox
 from qfluentwidgets import InfoBar, InfoBarPosition
 
-from config import INFO_BAR_DURATION_SHORT
-from ui.theme import PRIORITY_STYLE, TASK_INPUT_STYLE, ADD_BTN_STYLE
-from ui.widgets.base_widgets.dialog_base_widget import DialogBaseWidget
+from zen.config import INFO_BAR_DURATION_SHORT
+from zen.theme import PRIORITY_STYLE, TASK_INPUT_STYLE, ADD_BTN_STYLE
+from zen.widgets.base_widgets.dialog_base_widget import DialogBaseWidget
 
 
 QUALITY_OPTIONS = ["Good", "Fair", "Poor"]

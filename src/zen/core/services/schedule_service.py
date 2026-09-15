@@ -1,5 +1,5 @@
-from core.db import connection
-from core.utils.logger import logger
+from zen.core.db import connection
+from zen.core.utils.logger import logger
 
 
 def load_schedule() -> dict[str, list[list]]:

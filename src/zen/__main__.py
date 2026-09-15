@@ -1,7 +1,9 @@
-from ui.main_window import MainWindow
-from PyQt6.QtWidgets import QApplication
 import sys
-from core.utils.logger import logger
+
+from PyQt6.QtWidgets import QApplication
+
+from zen.main_window import MainWindow
+from zen.core.utils.logger import logger
 
 # ==============================================
 # Run Application

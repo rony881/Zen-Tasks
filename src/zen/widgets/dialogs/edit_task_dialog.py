@@ -1,8 +1,8 @@
 from PyQt6.QtCore import QTime
-from core.models.task import Task
-from core.utils.logger import logger
-from ui.theme import ADD_BTN_STYLE
-from ui.widgets.dialogs.add_task_dialog import AddTaskDialog
+from zen.core.models.task import Task
+from zen.core.utils.logger import logger
+from zen.theme import ADD_BTN_STYLE
+from zen.widgets.dialogs.add_task_dialog import AddTaskDialog
 
 
 class EditTaskDialog(AddTaskDialog):

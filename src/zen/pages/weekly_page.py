@@ -2,12 +2,12 @@ from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QAbstractItemView, QHeaderView, QTableWidgetItem, QTabWidget, QVBoxLayout, QWidget
 from qfluentwidgets import InfoBar, InfoBarPosition
 
-from config import INFO_BAR_DURATION_SHORT, TABLE_ROW_HEIGHT, TIME_COL, TASK_COL, PRIORITY_COL
-from core.services.schedule_service import load_schedule, save_schedule
-from core.models.task import Task
-from ui.widgets.dialogs.add_task_dialog import AddTaskDialog
-from ui.widgets.base_widgets.page_base_widget import PageBaseWidget
-from core.utils.logger import logger
+from zen.config import INFO_BAR_DURATION_SHORT, TABLE_ROW_HEIGHT, TIME_COL, TASK_COL, PRIORITY_COL
+from zen.core.services.schedule_service import load_schedule, save_schedule
+from zen.core.models.task import Task
+from zen.widgets.dialogs.add_task_dialog import AddTaskDialog
+from zen.widgets.base_widgets.page_base_widget import PageBaseWidget
+from zen.core.utils.logger import logger
 
 
 class WeeklyPage(PageBaseWidget):

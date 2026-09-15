@@ -4,7 +4,7 @@ Database access for the application.
 
 import sqlite3
 from contextlib import contextmanager
-from config import DB_FILE
+from zen.config import DB_FILE
 
 def get_connection() -> sqlite3.Connection:
     """Open a connection and ensure tables exist."""

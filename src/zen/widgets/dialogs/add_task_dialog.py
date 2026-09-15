@@ -1,8 +1,10 @@
 from qfluentwidgets import InfoBar, InfoBarPosition
-from config import INFO_BAR_DURATION_SHORT, PRIORITIES,UI_CONFIG
-from core.models.task import Task
-from ui.theme import ADD_BTN_STYLE, PRIORITY_STYLE, TASK_INPUT_STYLE
-from ui.widgets.base_widgets.dialog_base_widget import DialogBaseWidget
+
+from zen.config import INFO_BAR_DURATION_SHORT, PRIORITIES,UI_CONFIG
+from zen.core.models.task import Task
+from zen.theme import ADD_BTN_STYLE, PRIORITY_STYLE, TASK_INPUT_STYLE
+from zen.widgets.base_widgets.dialog_base_widget import DialogBaseWidget
+
 DIALOG_WIDTH = UI_CONFIG["dialog_width"]
 DIALOG_HEIGHT = UI_CONFIG["dialog_height"]
 

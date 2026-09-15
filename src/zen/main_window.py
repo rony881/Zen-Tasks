@@ -1,9 +1,10 @@
 from qfluentwidgets import FluentWindow, FluentIcon as FI
-from ui.pages.sleep_journal_page import SleepJournal
-from ui.pages.weekly_page import WeeklyPage
-from ui.pages.todays_page import DailyPage
-from config import UI_CONFIG
-from core.utils.logger import logger
+
+from zen.pages.sleep_journal_page import SleepJournal
+from zen.pages.weekly_page import WeeklyPage
+from zen.pages.todays_page import DailyPage
+from zen.config import UI_CONFIG
+from zen.core.utils.logger import logger
 
 WINDOW_WIDTH = UI_CONFIG["window_width"]
 WINDOW_HEIGHT = UI_CONFIG["window_height"]
@@ -31,8 +32,8 @@ class MainWindow(FluentWindow):
         """)
 
         # ============ Weekly Page ================
-        # self.weekly_page = WeeklyPage(self)
-        # self.weekly_page.setObjectName("weekly_page")
+        self.weekly_page = WeeklyPage(self)
+        self.weekly_page.setObjectName("weekly_page")
         # =========================================
 
         # ============ Daily Page ================
@@ -50,6 +51,6 @@ class MainWindow(FluentWindow):
     def _setup_main_panel(self):
         """Set up the navigation panel with sub-interfaces."""
         
-        # self.addSubInterface(self.weekly_page,FI.DOCUMENT,"Weekly Page")
+        self.addSubInterface(self.weekly_page,FI.DOCUMENT,"Weekly Page")
         self.addSubInterface(self.daily_page,FI.DOCUMENT,"Daily Page")
         self.addSubInterface(self.sleep_journal,FI.LEAF,"Sleep Journal")

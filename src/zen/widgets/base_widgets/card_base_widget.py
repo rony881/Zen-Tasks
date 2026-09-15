@@ -4,7 +4,9 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 from qfluentwidgets import CardWidget
-from config import UI_CONFIG
+
+from zen.config import UI_CONFIG
+
 HEIGHT = UI_CONFIG["card_height"]
 
 

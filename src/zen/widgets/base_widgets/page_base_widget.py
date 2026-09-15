@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QFrame, QHBoxLayout, QLayout, QScrollArea, QTabWidget, QVBoxLayout, QWidget
 from qfluentwidgets import FluentIcon, PrimaryPushButton, StrongBodyLabel, TableWidget, TitleLabel
-from ui.theme import ADD_BTN_STYLE, TAB_WIDG_STYLE, TITLE_STYLE
+from zen.theme import ADD_BTN_STYLE, TAB_WIDG_STYLE, TITLE_STYLE
 
 
 class PageBaseWidget(QWidget):

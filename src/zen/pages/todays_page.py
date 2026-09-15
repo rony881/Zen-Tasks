@@ -2,14 +2,15 @@ from qfluentwidgets import (InfoBar,
     InfoBarPosition, 
     ProgressRing, 
 )
-from config import INFO_BAR_DURATION_SHORT, current_day
-from core.services.task_service import load_todays_tasks, save_todays_tasks
-from core.models.task import Task
-from ui.widgets.dialogs.add_task_dialog import AddTaskDialog
-from ui.widgets.dialogs.edit_task_dialog import EditTaskDialog
-from ui.widgets.card_widgets.task_card import TaskCard
-from ui.widgets.base_widgets.page_base_widget import PageBaseWidget
-from core.utils.logger import logger
+
+from zen.config import INFO_BAR_DURATION_SHORT, current_day
+from zen.core.services.task_service import load_todays_tasks, save_todays_tasks
+from zen.core.models.task import Task
+from zen.widgets.dialogs.add_task_dialog import AddTaskDialog
+from zen.widgets.dialogs.edit_task_dialog import EditTaskDialog
+from zen.widgets.card_widgets.task_card import TaskCard
+from zen.widgets.base_widgets.page_base_widget import PageBaseWidget
+from zen.core.utils.logger import logger
 
 class DailyPage(PageBaseWidget):
     """Daily page showing today's tasks with progress tracking and also many features."""

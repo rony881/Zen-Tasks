@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout
 from qfluentwidgets import CaptionLabel, CardWidget, IconWidget,StrongBodyLabel
-from core.utils.logger import logger
 
+from zen.core.utils.logger import logger
 
 class StatsCard(CardWidget):
     """Creats a Card for Showing Statistics"""
