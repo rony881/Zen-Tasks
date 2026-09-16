@@ -42,7 +42,7 @@ class StatsCard(CardWidget):
         layout.addWidget(self.subLabel)
         layout.addStretch(1)
 
-    def set_Value(self, value: int, sub: str):
+    def set_value(self, value: int, sub: str):
         self.valueLabel.setText(str(value))
         self.subLabel.setText(sub)
         logger.info("Value & subtitle was given")
