@@ -42,6 +42,6 @@ class MainWindow(FluentWindow):
     def _setup_main_panel(self):
         """Set up the navigation panel with sub-interfaces."""
         
-        self.addSubInterface(self.weekly_page,FI.DOCUMENT,"Weekly Page")
-        self.addSubInterface(self.daily_page,FI.DOCUMENT,"Daily Page")
-        self.addSubInterface(self.sleep_journal,FI.LEAF,"Sleep Journal")
+        self.addSubInterface(self.weekly_page,FI.CALENDAR,"Weekly Page")
+        self.addSubInterface(self.daily_page,FI.DATE_TIME,"Daily Page")
+        self.addSubInterface(self.sleep_journal,FI.QUIET_HOURS,"Sleep Journal")
