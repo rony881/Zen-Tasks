@@ -10,6 +10,7 @@ from zen.widgets.dialogs.add_task_dialog import AddTaskDialog
 from zen.widgets.dialogs.edit_task_dialog import EditTaskDialog
 from zen.widgets.card_widgets.task_card import TaskCard
 from zen.widgets.base_widgets.page_base_widget import PageBaseWidget
+from zen.widgets.empty_state_widget import EmptyStateWidget
 from zen.core.utils.logger import logger
 
 class DailyPage(PageBaseWidget):
@@ -45,6 +46,10 @@ class DailyPage(PageBaseWidget):
             if widget is not None:
                 widget.deleteLater()
 
+        if not self.tasks:
+            self._show_empty_task()
+            return
+
         for task in self.tasks:
             card = TaskCard(task)
             card.checkbox_changed.connect(self._on_task_checked)
@@ -54,6 +59,14 @@ class DailyPage(PageBaseWidget):
 
         self.list_layout.addStretch(1)
 
+    def _show_empty_task(self):
+            empty_state = EmptyStateWidget(
+                title="No tasks for today",
+                subtitle="Enjoy the free time, or add something to get done.",
+                button_text="Add Task",
+            )
+            empty_state.add_clicked.connect(self.onAddButtonClicked)
+            self.list_layout.addWidget(empty_state)
         
     def _add_task(self, task: Task):
         """Add a new task to the task list."""
