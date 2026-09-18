@@ -9,7 +9,7 @@ class PageBaseWidget(QWidget):
     def __init__(self,parent):
         super().__init__(parent)
         self.main_layout = QVBoxLayout(self)
-        self.main_layout.setContentsMargins(24, 0, 24, 24)
+        self.main_layout.setContentsMargins(24, 10, 24, 24)
         self.main_layout.setSpacing(30)
 
         self.list_layout = QVBoxLayout()
